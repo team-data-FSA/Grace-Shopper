@@ -2,10 +2,10 @@
 
 const {
   db,
-  models: { User },
+  models: { User, Animal },
 } = require('../server/db');
-
-//gonna put stuff here
+const fs = require('fs');
+const animalData = require('./seedoutput');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -14,6 +14,22 @@ const {
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
+
+  // creating animals
+  for (let i = 0; i < animalData.length; i++) {
+    const animal = animalData[i];
+    await Animal.create({
+      name: animal.name,
+      latinName: animal.latin_name,
+      animalType: animal.animal_type,
+      diet: animal.diet,
+      habitat: animal.habitat,
+      location: animal.geo_range,
+      lifeSpan: animal.lifespan,
+      price: animal.price,
+      picture: animal.image_link,
+    });
+  }
 
   // Creating Users
   const users = await Promise.all([
