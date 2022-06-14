@@ -19,3 +19,26 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.container {
+  align-items: flex-start;
+  align-content: space-between;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  margin: 15px;
+  width: 45%;
+  height: 80%;
+  box-shadow: 0 4px 10px 0 rgba(196, 196, 196, 0.2);
+  transition: 0.3s;
+}
+
+.media {
+  object-fit: fill;
+}
