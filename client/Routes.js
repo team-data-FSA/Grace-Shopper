@@ -1,4 +1,3 @@
-
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -6,8 +5,9 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import AllAnimals from "./components/AllAnimals";
 import SingleAnimal from "./components/SingleAnimal";
+// import Checkout from './components/Checkout';
+// import Confirmation from './components/Confirmation';
 import { me } from "./store";
-
 
 /**
  * COMPONENT
@@ -26,14 +26,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/animals" exact component={AllAnimals} />
             <Route path="/animals/:id" exact component={SingleAnimal} />
-
-            {/* I commented this out to be able to see my AllAnimals component */}
-            {/* <Route path="/home" component={Home} /> */}
             <Redirect to="/animals" />
-//             <Route path='/checkout' component={Checkout} /> //not sure which of these we need. kept after conflict.
-//             <Route path='/confirmed' component={Confirmation} />
-//             <Redirect to="/home" />
-
           </Switch>
         ) : (
           <Switch>
