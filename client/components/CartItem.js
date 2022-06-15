@@ -1,17 +1,19 @@
 import React from 'react';
 
-//Assuming input is Animal instance, quantity
 const CartItem = (props) => {
-  const item = props.item;
+  const animal = props.currAnimal[0];
   const quantity = props.quantity;
 
+  console.log(animal);
+
   return (
-    <div>
-      <img src={item.picture} />
+    <div className='cart-item'>
       <div>
-        <h3>{item.name}</h3>
-        <h5>${item.price}</h5>
-        <h5>{quantity}</h5>
+        <img id='cart-img' src={animal.picture} />
+      </div>
+      <div>
+        <h5>{animal.name}</h5>
+        <h5>Quantity: {quantity}</h5>
       </div>
     </div>
   );
