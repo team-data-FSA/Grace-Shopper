@@ -39,7 +39,21 @@ function Total() {
         thousandSeparator={true}
         prefix={'$'}
       />
-      <button>Checkout</button>
+      <a
+        href='/confirmation'
+        className='button'
+        style={{
+          display: 'inline-block',
+          textAlign: 'center',
+          textDecoration: 'none',
+          color: '#ffffff',
+          backgroundColor: '#7aa8b7',
+          borderRadius: '6px',
+          outline: 'none',
+        }}
+      >
+        Checkout
+      </a>
     </div>
   );
 }
