@@ -26,7 +26,6 @@ const Navbar = () => {
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to='/home'>Home</Link>
-            <Link to='/checkout'>Checkout</Link>
             <Link className='cart' to='/checkout'>
               Cart:{cart.length}
             </Link>
