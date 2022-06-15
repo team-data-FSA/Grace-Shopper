@@ -1,12 +1,14 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchAnimals } from '../store/animals';
+import { addToCart } from '../store/cart';
 import { useSelector, useDispatch } from 'react-redux';
 //The following are for Material-UI components
 import {
   Typography, //text
   Button,
+  TextField,
   Card,
   CardActions,
   CardContent,
@@ -14,8 +16,8 @@ import {
 } from '@material-ui/core';
 
 const AllAnimals = () => {
-  // pull state from Redux
-  const { animals } = useSelector((state) => {
+  // pull state from Redux we also have access to auth
+  const { animals, auth } = useSelector((state) => {
     return state;
   });
 
@@ -26,6 +28,13 @@ const AllAnimals = () => {
   useEffect(() => {
     dispatch(fetchAnimals());
   }, []);
+
+  // Creating a qty state for number of animals to be adopted
+  const [qty, setQty] = useState(1);
+
+  const handleChange = (event) => {
+    setQty(event.target.value);
+  };
 
   return (
     <div>
@@ -59,12 +68,23 @@ const AllAnimals = () => {
                   </CardContent>
                 </Link>
                 <CardActions>
+                  <TextField
+                    variant='outlined'
+                    style={{ maxWidth: 80 }}
+                    label='Qty'
+                    type='number'
+                    placeholder='0-100'
+                    name='Qty'
+                    value={qty}
+                    onChange={handleChange}
+                  />
                   <Button
                     variant='contained'
                     color='primary'
                     size='small'
                     onClick={() => {
-                      // console.log("button is clicked but nothing happens");
+                      // console.log("userId: ", auth.id);
+                      dispatch(addToCart(auth.id, animal.id, qty));
                     }}
                   >
                     Adopt Me!

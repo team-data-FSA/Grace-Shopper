@@ -1,11 +1,13 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAnimal } from '../store/animal';
+import { addToCart } from '../store/cart';
 // The following are for Material-UI components
 import {
   Typography, //text
   Button,
+  TextField,
   Card,
   CardMedia,
   CardContent,
@@ -14,7 +16,7 @@ import {
 
 const SingleAnimal = (props) => {
   // pull state from redux
-  const { animal } = useSelector((state) => {
+  const { animal, auth } = useSelector((state) => {
     return state;
   });
 
@@ -25,6 +27,13 @@ const SingleAnimal = (props) => {
   useEffect(() => {
     dispatch(fetchAnimal(props.match.params.id));
   }, []);
+
+  // Creating a qty state for number of animals to be adopted
+  const [qty, setQty] = useState(1);
+
+  const handleChange = (event) => {
+    setQty(event.target.value);
+  };
 
   return (
     <div className='container'>
@@ -64,12 +73,23 @@ const SingleAnimal = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
+          <TextField
+            variant='outlined'
+            style={{ maxWidth: 80 }}
+            label='Qty'
+            type='number'
+            placeholder='0-100'
+            name='Qty'
+            value={qty}
+            onChange={handleChange}
+          />
           <Button
             variant='contained'
             color='primary'
             size='small'
             onClick={() => {
-              // console.log("button is clicked but nothing happens");
+              // console.log("userId: ", auth.id);
+              dispatch(addToCart(auth.id, animal.id, qty));
             }}
           >
             Adopt Me!
