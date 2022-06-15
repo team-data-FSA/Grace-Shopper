@@ -16,6 +16,7 @@ const Checkout = () => {
   }, {});
   const cart = Object.keys(cartObj).map((key) => [Number(key), cartObj[key]]);
   const numItems = unformattedCart.length;
+
   const animals = useSelector((state) => state.animals);
 
   const calculateTotal = useEffect(() => {
@@ -32,7 +33,7 @@ const Checkout = () => {
         justifyContent: 'space-between',
       }}
     >
-      <div className='cart-list' style={{}}>
+      <div className='cart-list' style={{ width: '50em' }}>
         <div>
           <h2
             className='cart-title'
@@ -40,7 +41,7 @@ const Checkout = () => {
           >
             Cart Items
           </h2>
-          <div className='cart-list'>
+          <div>
             {animals.length > 0 ? (
               cart.map((item) => {
                 let currAnimal = animals.filter(
