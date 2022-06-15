@@ -21,3 +21,23 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+// API Route to add animals to database
+router.post('/', async (req, res, next) => {
+  try {
+    const newAnimal = await Animal.create(req.body);
+    res.json(newAnimal);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// API Route to edit animals on the database
+router.put('/:id', async (req, res, next) => {
+  try {
+    const animal = await Animal.findByPk(req.params.id);
+    res.json(await animal.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
