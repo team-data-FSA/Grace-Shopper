@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Action constants
-const SET_CART = SET_CART;
-const ADD_TO_CART = ADD_TO_CART;
+const SET_CART = 'SET_CART';
+const ADD_TO_CART = 'ADD_TO_CART';
 
 // Action creators
 const setCart = (cart) => {
