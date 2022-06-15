@@ -8,14 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 const Checkout = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
+  let cartTotal = 0;
+
   const unformattedCart = useSelector((state) => state.cart);
   const cartObj = unformattedCart.reduce(function (acc, curr) {
     return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
   }, {});
   const cart = Object.keys(cartObj).map((key) => [Number(key), cartObj[key]]);
+  const numItems = unformattedCart.length;
   const animals = useSelector((state) => state.animals);
 
-  useEffect(() => {
+  const calculateTotal = useEffect(() => {
     dispatch(fetchCart(userId));
     dispatch(fetchAnimals());
   }, []);
@@ -43,6 +46,7 @@ const Checkout = () => {
                 let currAnimal = animals.filter(
                   (animal) => animal.id === item[0]
                 );
+
                 return (
                   <CartItem
                     currAnimal={currAnimal}
@@ -58,7 +62,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className='cart-total' style={{}}>
-        <Total />
+        <Total numItems={numItems} totalAmt={cartTotal} />
       </div>
     </div>
   );
