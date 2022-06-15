@@ -2,8 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchAnimals } from "../store/animals";
+
+//The following are for Material-UI components
 import {
-  Typography,
+  Typography, //text
   Button,
   Card,
   CardActions,
@@ -11,7 +13,7 @@ import {
   CardMedia,
 } from "@material-ui/core";
 
-class AllProducts extends React.Component {
+class AllAnimals extends React.Component {
   componentDidMount() {
     this.props.getAnimals();
   }
@@ -19,17 +21,17 @@ class AllProducts extends React.Component {
     return (
       <div>
         <Typography variant="h3" component="div">
-          All Animals
+          Welcome to our exotic shelter.
         </Typography>
         <ul className="container">
           {this.props.animals.length > 0 ? (
             this.props.animals.map((animal) => (
               <div className="card" key={animal.id}>
-                <Link
-                  to={`animals/${animal.id}`}
-                  style={{ textDecoration: "none" }}
-                >
-                  <Card>
+                <Card>
+                  <Link
+                    to={`animals/${animal.id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
                     <CardMedia
                       component="img"
                       alt={`${animal.name} picture`}
@@ -46,24 +48,24 @@ class AllProducts extends React.Component {
                         {animal.price}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        onClick={() => {
-                          // console.log("button is clicked but nothing happens");
-                        }}
-                      >
-                        Add to Cart
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Link>
+                  </Link>
+                  <CardActions>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      onClick={() => {
+                        // console.log("button is clicked but nothing happens");
+                      }}
+                    >
+                      Adopt Me!
+                    </Button>
+                  </CardActions>
+                </Card>
               </div>
             ))
           ) : (
-            <div>Loading Animals</div>
+            <div>Loading Exotic Pets!</div> //this catches while the animals load may not be optimal solution
           )}
         </ul>
       </div>
@@ -75,8 +77,8 @@ const mapStateToProps = (state) => ({
   animals: state.animals,
 });
 
-const mapDispatchToProps = (dispatch, { history }) => ({
+const mapDispatchToProps = (dispatch) => ({
   getAnimals: () => dispatch(fetchAnimals()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(AllAnimals);

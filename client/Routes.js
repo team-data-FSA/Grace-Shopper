@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
-import AllProducts from "./components/AllProducts";
+import AllAnimals from "./components/AllAnimals";
+import SingleAnimal from "./components/SingleAnimal";
 import { me } from "./store";
 
 /**
@@ -21,17 +22,18 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
-            <Redirect to="/home" />
+            <Route path="/animals" exact component={AllAnimals} />
+            <Route path="/animals/:id" exact component={SingleAnimal} />
+
+            {/* I commented this out to be able to see my AllAnimals component */}
+            {/* <Route path="/home" component={Home} /> */}
+            <Redirect to="/animals" />
           </Switch>
         ) : (
           <Switch>
-            {/* I commented this out to be able to see my AllProducts component */}
-
-            {/* <Route path='/' exact component={ Login } />
+            <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} /> */}
-            <Route path="/" component={AllProducts} />
+            <Route path="/signup" component={Signup} />
           </Switch>
         )}
       </div>
