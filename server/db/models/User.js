@@ -17,6 +17,7 @@ const User = db.define('user', {
   },
   cart: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: [],
   },
 });
 
