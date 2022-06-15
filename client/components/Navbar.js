@@ -23,13 +23,12 @@ const Navbar = () => {
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <Link to="/checkout">Checkout</Link>
-            <Link className="cart" to="/checkout">
+            <Link to='/home'>Home</Link>
+            <Link className='cart' to='/checkout'>
               Cart:{cart.length}
             </Link>
             <a
-              href="#"
+              href='#'
               onClick={() => {
                 dispatch(logout());
               }}
@@ -40,8 +39,8 @@ const Navbar = () => {
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to='/login'>Login</Link>
+            <Link to='/signup'>Sign Up</Link>
           </div>
         )}
       </nav>

@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchAnimal } from "../store/animal";
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchAnimal } from '../store/animal';
 
 //The following are for Material-UI components
 import {
@@ -10,7 +10,7 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 class SingleAnimal extends React.Component {
   componentDidMount() {
@@ -21,47 +21,47 @@ class SingleAnimal extends React.Component {
     const { animal } = this.props;
 
     return (
-      <div className="container">
+      <div className='container'>
         <Card>
           <CardMedia
-            component="img"
+            component='img'
             alt={`${animal.name} picture`}
             image={animal.picture}
-            height="500"
-            width="80"
-            className="media"
+            height='500'
+            width='80'
+            className='media'
           />
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography variant='h5' component='div'>
               {animal.name}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Latin Name: {animal.latinName}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Type: {animal.animalType}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Diet: {animal.diet}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Habitat: {animal.habitat}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Location: {animal.location}
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               LifeSpan: {animal.lifeSpan} years!
             </Typography>
-            <Typography variant="body1" component="div">
+            <Typography variant='body1' component='div'>
               Price: ${animal.price}
             </Typography>
           </CardContent>
           <CardActions>
             <Button
-              variant="contained"
-              color="primary"
-              size="small"
+              variant='contained'
+              color='primary'
+              size='small'
               onClick={() => {
                 // console.log("button is clicked but nothing happens");
               }}
