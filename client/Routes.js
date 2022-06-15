@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/Home";
-import AllAnimals from "./components/AllAnimals";
-import SingleAnimal from "./components/SingleAnimal";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Login, Signup } from './components/AuthForm';
+import Home from './components/Home';
+import AllAnimals from './components/AllAnimals';
+import SingleAnimal from './components/SingleAnimal';
 // import Checkout from './components/Checkout';
 // import Confirmation from './components/Confirmation';
-import { me } from "./store";
+import { me } from './store';
 
 /**
  * COMPONENT
@@ -24,15 +24,15 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/animals" exact component={AllAnimals} />
-            <Route path="/animals/:id" exact component={SingleAnimal} />
-            <Redirect to="/animals" />
+            <Route path='/animals' exact component={AllAnimals} />
+            <Route path='/animals/:id' exact component={SingleAnimal} />
+            <Redirect to='/animals' />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route path='/' exact component={Login} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
           </Switch>
         )}
       </div>
