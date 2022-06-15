@@ -1,7 +1,9 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
 
-function Total() {
+function Total(props) {
+  const numItems = props.numItems;
+  const totalAmt = props.totalAmt;
   return (
     <div
       className='total'
@@ -21,8 +23,8 @@ function Total() {
         renderText={(value) => (
           <>
             <p>
-              Total (0 items):
-              <strong>0</strong>
+              Total ({numItems} items):
+              <strong>{totalAmt}</strong>
             </p>
             <small className='total-gift'>
               <input type='checkbox' />
