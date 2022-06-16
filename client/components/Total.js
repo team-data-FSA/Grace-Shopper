@@ -10,8 +10,6 @@ function Total(props) {
     numItems += cartDetails[i].quantity;
   }
 
-  console.log(cartDetails);
-
   return (
     <div
       className='total'
