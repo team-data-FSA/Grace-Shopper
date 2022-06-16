@@ -19,7 +19,7 @@ const emptyAnimal = {
   habitat: '',
   location: '',
   lifeSpan: '',
-  price: 0,
+  price: '',
   picture: '',
 };
 
@@ -38,8 +38,10 @@ const EditAnimal = () => {
     newAnimal[e.target.id] = e.target.value;
     setAnimal(newAnimal);
   };
-  const handleSubmit = () => console.log(animal);
-  const handleReset = () => setAnimal(emptyAnimal);
+  const handleSubmit = () => console.log(animal); // we need to add the thunk to update animal
+  const handleReset = () => setAnimal(animalFromStore);
+  const handleClear = () => setAnimal(emptyAnimal);
+  const handleDelete = () => console.log('need to delete animal'); // add thunk for delete
 
   useEffect(() => {
     setAnimal(animalFromStore);
@@ -109,6 +111,8 @@ const EditAnimal = () => {
 
           <Button onClick={handleSubmit}>Submit</Button>
           <Button onClick={handleReset}>Reset</Button>
+          <Button onClick={handleClear}>Clear</Button>
+          <Button onClick={handleDelete}>Delete</Button>
         </FormControl>
       </Paper>
     </div>
