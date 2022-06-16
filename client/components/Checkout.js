@@ -3,6 +3,7 @@ import Total from './Total';
 import CartItem from './CartItem';
 import { fetchCart } from '../store/cart';
 import { fetchAnimals } from '../store/animals';
+import { fetchCartDetails } from '../store/cartDetails';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Checkout = () => {
@@ -10,19 +11,26 @@ const Checkout = () => {
   const userId = useSelector((state) => state.auth.id);
   let cartTotal = 0;
 
-  const unformattedCart = useSelector((state) => state.cart);
-  const cartObj = unformattedCart.reduce(function (acc, curr) {
+  const cartArray = useSelector((state) => state.cart);
+  const cartObj = cartArray.reduce(function (acc, curr) {
     return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
   }, {});
   const cart = Object.keys(cartObj).map((key) => [Number(key), cartObj[key]]);
-  const numItems = unformattedCart.length;
+  const numItems = cartArray.length;
+
+  const cartDetails = useSelector((state) => state.cartDetails);
+  console.log(cartDetails);
 
   const animals = useSelector((state) => state.animals);
 
-  const calculateTotal = useEffect(() => {
+  useEffect(() => {
     dispatch(fetchCart(userId));
     dispatch(fetchAnimals());
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchCartDetails(cartObj));
+  }, [cartArray]);
 
   return (
     <div
@@ -42,17 +50,13 @@ const Checkout = () => {
             Cart Items
           </h2>
           <div>
-            {animals.length > 0 ? (
-              cart.map((item) => {
-                let currAnimal = animals.filter(
-                  (animal) => animal.id === item[0]
-                );
-
+            {cartDetails.length > 0 ? (
+              cartDetails.map((item) => {
                 return (
                   <CartItem
-                    currAnimal={currAnimal}
-                    quantity={item[1]}
-                    key={item[0]}
+                    currAnimal={item.animal}
+                    quantity={item.quantity}
+                    key={item.animal.id}
                   />
                 );
               })
@@ -63,7 +67,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className='cart-total' style={{}}>
-        <Total numItems={numItems} totalAmt={cartTotal} />
+        <Total cartDetails={cartDetails} />
       </div>
     </div>
   );

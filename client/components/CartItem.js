@@ -4,7 +4,7 @@ import { editCart } from '../store/cart';
 import { useHistory } from 'react-router-dom';
 
 const CartItem = (props) => {
-  const animal = props.currAnimal[0];
+  const animal = props.currAnimal;
   const quantity = props.quantity;
 
   const userId = useSelector((state) => state.auth.id);
