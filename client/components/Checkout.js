@@ -18,7 +18,6 @@ const Checkout = () => {
 
   useEffect(() => {
     dispatch(fetchCart(userId));
-    dispatch(fetchAnimals());
   }, []);
 
   useEffect(() => {
@@ -30,6 +29,7 @@ const Checkout = () => {
       className='checkout'
       style={{
         display: 'flex',
+        flexDirection: 'column',
         padding: '20px',
         justifyContent: 'space-between',
       }}
@@ -38,7 +38,7 @@ const Checkout = () => {
         <div>
           <h2
             className='cart-title'
-            style={{ padding: '10px', borderBottom: '1px solid lightgray' }}
+            style={{ padding: '8px', borderBottom: '1px solid lightgray' }}
           >
             Cart Items
           </h2>
@@ -54,7 +54,7 @@ const Checkout = () => {
                 );
               })
             ) : (
-              <p>Loading...</p>
+              <p>Cart is empty!</p>
             )}
           </div>
         </div>
