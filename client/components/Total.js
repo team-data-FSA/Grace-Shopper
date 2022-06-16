@@ -2,13 +2,15 @@ import React from 'react';
 import CurrencyFormat from 'react-currency-format';
 
 function Total(props) {
-  const cartDetails = props.cartDetails;
+  let cartDetails = props.cartDetails;
   let total = 0;
   let numItems = 0;
   for (let i = 0; i < cartDetails.length; i++) {
     total += cartDetails[i].quantity * cartDetails[i].animal.price;
     numItems += cartDetails[i].quantity;
   }
+
+  console.log(cartDetails);
 
   return (
     <div
@@ -50,6 +52,7 @@ function Total(props) {
       <a
         href='/confirmation'
         className='button'
+        onClick={() => console.log('empty')}
         style={{
           display: 'inline-block',
           textAlign: 'center',
