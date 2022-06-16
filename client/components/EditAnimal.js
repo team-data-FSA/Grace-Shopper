@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  FormControl,
-  InputLabel,
-  Input,
-  FormHelperText,
-  Paper,
-  Button,
-  TextField,
-} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { FormControl, Paper, Button, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAnimal } from '../store/animal';
+import { updateAnimal, deleteAnimal } from '../store/animals';
+import { useHistory } from 'react-router-dom';
 
 const emptyAnimal = {
   name: '',
@@ -25,6 +19,7 @@ const emptyAnimal = {
 
 const EditAnimal = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   let animalFromStore = useSelector((state) => state.animal);
 
   if (!animalFromStore.id) {
@@ -38,10 +33,10 @@ const EditAnimal = () => {
     newAnimal[e.target.id] = e.target.value;
     setAnimal(newAnimal);
   };
-  const handleSubmit = () => console.log(animal); // we need to add the thunk to update animal
+  const handleSubmit = () => dispatch(updateAnimal(animal, history));
   const handleReset = () => setAnimal(animalFromStore);
   const handleClear = () => setAnimal(emptyAnimal);
-  const handleDelete = () => console.log('need to delete animal'); // add thunk for delete
+  const handleDelete = () => dispatch(deleteAnimal(animal.id, history)); // add thunk for delete
 
   useEffect(() => {
     setAnimal(animalFromStore);
@@ -57,7 +52,7 @@ const EditAnimal = () => {
         }}
       >
         <h2>Edit Animal</h2>
-        <FormControl>
+        <FormControl style={{ padding: '1rem' }}>
           <TextField
             onChange={onTextChange}
             value={animal.name}
