@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Animal },
+  models: { User, Animal, CartModel, Order, OrderAnimals },
 } = require('../server/db');
 const fs = require('fs');
 const animalData = require('./seedoutput');
@@ -45,6 +45,18 @@ async function seed() {
     User.create({ username: 'lauren', password: '123', isAdmin: true }),
     User.create({ username: 'sheba', password: '123', isAdmin: true }),
   ]);
+
+  const carts = await Promise.all([CartModel.create(), CartModel.create()]);
+  const orders = await Promise.all([Order.create(), Order.create()]);
+
+  await users[0].setCartModel(carts[0]);
+
+  const animal1 = await Animal.findByPk(1);
+  await orders[0].addAnimal(animal1, { through: { quantity: 3 } });
+
+  // const orderTest = await Order.findByPk(1, { include: Animal });
+  // const testOrderAnimals = await orderTest.getAnimals();
+  // console.log(testOrderAnimals);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
