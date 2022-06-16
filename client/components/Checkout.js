@@ -2,26 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Total from './Total';
 import CartItem from './CartItem';
 import { fetchCart } from '../store/cart';
-import { fetchAnimals } from '../store/animals';
 import { fetchCartDetails } from '../store/cartDetails';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
-  let cartTotal = 0;
 
   const cartArray = useSelector((state) => state.cart);
   const cartObj = cartArray.reduce(function (acc, curr) {
     return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
   }, {});
-  const cart = Object.keys(cartObj).map((key) => [Number(key), cartObj[key]]);
-  const numItems = cartArray.length;
 
   const cartDetails = useSelector((state) => state.cartDetails);
-  console.log(cartDetails);
-
-  const animals = useSelector((state) => state.animals);
 
   useEffect(() => {
     dispatch(fetchCart(userId));
