@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editCart } from '../store/cart';
 import { useHistory } from 'react-router-dom';
@@ -12,8 +12,6 @@ const CartItem = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [cartQuant, setCartQuant] = useState(quantity);
-
   return (
     <div className='cart-item'>
       <div>
@@ -25,7 +23,9 @@ const CartItem = (props) => {
       <div>
         <button
           className='change-quant-button decrease'
-          onClick={() => setCartQuant(cartQuant - 1)}
+          onClick={() => {
+            dispatch(editCart(userId, animal.id, quantity - 1, history));
+          }}
         >
           -
         </button>
@@ -33,27 +33,31 @@ const CartItem = (props) => {
           type='number'
           className='cartQuant'
           name='cartQuant'
-          value={cartQuant}
-          onChange={(e) => setCartQuant(e.target.value)}
+          value={quantity}
+          onChange={(e) => {
+            dispatch(editCart(userId, animal.id, e.target.value, history));
+          }}
         />
         <button
           className='change-quant-button increase'
-          onClick={() => setCartQuant(cartQuant + 1)}
+          onClick={() => {
+            dispatch(editCart(userId, animal.id, quantity + 1, history));
+          }}
         >
           +
-        </button>
-        <button
-          type='submit'
-          onClick={() =>
-            dispatch(editCart(userId, animal.id, cartQuant, history))
-          }
-        >
-          Update
         </button>
       </div>
       <div>
         <h3>${animal.price}</h3>
       </div>
+      <button
+        className='remove-cart'
+        onClick={() => {
+          dispatch(editCart(userId, animal.id, 0, history));
+        }}
+      >
+        Remove
+      </button>
     </div>
   );
 };
