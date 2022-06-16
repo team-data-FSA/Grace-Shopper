@@ -46,3 +46,47 @@ form div {
 .media {
   object-fit: fill;
 }
+
+.cart-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-list{
+  display: flex;
+  flex-direction: column;
+}
+
+#cart-img{
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.change-quant-button{
+  border-radius: 25%;
+  color: white;
+  width: 2em;
+  height: 2em;
+}
+
+.cartQuant{
+  width: 30px;
+  text-align: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.decrease{
+  background-color: red;
+}
+
+.increase{
+  background-color: green;
+}

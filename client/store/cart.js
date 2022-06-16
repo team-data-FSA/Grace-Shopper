@@ -3,6 +3,7 @@ import axios from 'axios';
 // Action constants
 const SET_CART = 'SET_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
+const EDIT_CART = 'EDIT_CART';
 
 // Action creators
 const setCart = (cart) => {
@@ -15,6 +16,13 @@ const setCart = (cart) => {
 const addCart = (cart) => {
   return {
     type: ADD_TO_CART,
+    cart,
+  };
+};
+
+const _editCart = (cart) => {
+  return {
+    type: EDIT_CART,
     cart,
   };
 };
@@ -68,8 +76,29 @@ export const addToCart = (userId, animalId, quantity) => {
         // Update user's cart
         await axios.put(`/api/users/${userId}`, { cart: cart });
       }
-      console.log('cart:', cart);
+
       dispatch(addCart(cart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const editCart = (userId, animalId, quantity, history) => {
+  return async (dispatch) => {
+    try {
+      const { data: userData } = await axios.get(`/api/users/${userId}`);
+      let cart = userData.cart;
+
+      // Remove any current instances of animal in cart
+      cart = cart.filter((animal) => animal !== animalId);
+      // Add updated number of animal into cart (could be 0)
+      for (let i = 0; i < quantity; i++) {
+        cart.push(animalId);
+      }
+      // Update user's cart
+      await axios.put(`/api/users/${userId}`, { cart: cart });
+      dispatch(_editCart(cart));
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +112,8 @@ export default (state = initialState, action) => {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
+      return action.cart;
+    case EDIT_CART:
       return action.cart;
     default:
       return state;
