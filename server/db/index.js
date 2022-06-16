@@ -12,17 +12,19 @@ CartModel.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-const CartAnimals = db.define('CartAnimals', {
+const CartAnimal = db.define('CartAnimal', {
   quantity: Sequelize.INTEGER,
 });
-Animal.belongsToMany(CartModel, { through: CartAnimals });
-CartModel.belongsToMany(Animal, { through: CartAnimals });
+Animal.belongsToMany(CartModel, { through: CartAnimal });
+CartModel.belongsToMany(Animal, { through: CartAnimal });
 
-const OrderAnimals = db.define('OrderAnimals', {
+const OrderAnimal = db.define('OrderAnimal', {
   quantity: Sequelize.INTEGER,
 });
-Animal.belongsToMany(Order, { through: OrderAnimals });
-Order.belongsToMany(Animal, { through: OrderAnimals });
+Animal.belongsToMany(Order, {
+  through: OrderAnimal,
+});
+Order.belongsToMany(Animal, { through: OrderAnimal });
 
 module.exports = {
   db,
@@ -31,6 +33,6 @@ module.exports = {
     Animal,
     CartModel,
     Order,
-    OrderAnimals,
+    OrderAnimal,
   },
 };

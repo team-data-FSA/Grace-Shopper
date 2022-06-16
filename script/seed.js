@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Animal, CartModel, Order, OrderAnimals },
+  models: { User, Animal, CartModel, Order, OrderAnimal },
 } = require('../server/db');
 const fs = require('fs');
 const animalData = require('./seedoutput');
@@ -54,9 +54,11 @@ async function seed() {
   const animal1 = await Animal.findByPk(1);
   await orders[0].addAnimal(animal1, { through: { quantity: 3 } });
 
-  // const orderTest = await Order.findByPk(1, { include: Animal });
+  // const orderTest = await Order.findByPk(1, {
+  //   include: Animal,
+  //   through: { OrderAnimal },
+  // });
   // const testOrderAnimals = await orderTest.getAnimals();
-  // console.log(testOrderAnimals);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
