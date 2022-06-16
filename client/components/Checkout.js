@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Total from './Total';
 import CartItem from './CartItem';
 import { fetchCart } from '../store/cart';
+import { fetchAnimals } from '../store/animals';
 import { fetchCartDetails } from '../store/cartDetails';
 import { useDispatch, useSelector } from 'react-redux';
 
