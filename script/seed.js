@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Animal, CartModel, Order, OrderAnimals },
+  models: { User, Animal, CartModel, Order, OrderAnimal },
 } = require('../server/db');
 const fs = require('fs');
 const animalData = require('./seedoutput');
@@ -15,20 +15,24 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
 
+  let animals = [];
+
   // creating animals
   for (let i = 0; i < animalData.length; i++) {
     const animal = animalData[i];
-    await Animal.create({
-      name: animal.name,
-      latinName: animal.latin_name,
-      animalType: animal.animal_type,
-      diet: animal.diet,
-      habitat: animal.habitat,
-      location: animal.geo_range,
-      lifeSpan: animal.lifespan,
-      price: animal.price,
-      picture: animal.image_link,
-    });
+    animals.push(
+      await Animal.create({
+        name: animal.name,
+        latinName: animal.latin_name,
+        animalType: animal.animal_type,
+        diet: animal.diet,
+        habitat: animal.habitat,
+        location: animal.geo_range,
+        lifeSpan: animal.lifespan,
+        price: animal.price,
+        picture: animal.image_link,
+      })
+    );
   }
 
   // Creating Users
@@ -46,17 +50,31 @@ async function seed() {
     User.create({ username: 'sheba', password: '123', isAdmin: true }),
   ]);
 
-  const carts = await Promise.all([CartModel.create(), CartModel.create()]);
+  // Assign carts to each user
+  let carts = [];
+  for (let i = 0; i < users.length; i++) {
+    carts[i] = await CartModel.create();
+    await users[i].setCartModel(carts[i]);
+  }
+  // Create orders and add to users
   const orders = await Promise.all([Order.create(), Order.create()]);
+  await users[5].addOrder(orders[0]);
+  await users[4].addOrder(orders[1]);
 
-  await users[0].setCartModel(carts[0]);
+  // Add animals to orders
+  await orders[0].addAnimal(animals[0], { through: { quantity: 3 } });
+  await orders[0].addAnimal(animals[1], { through: { quantity: 5 } });
+  await orders[0].addAnimal(animals[2], { through: { quantity: 1 } });
+  await orders[1].addAnimal(animals[5], { through: { quantity: 2 } });
+  await orders[1].addAnimal(animals[6], { through: { quantity: 4 } });
 
-  const animal1 = await Animal.findByPk(1);
-  await orders[0].addAnimal(animal1, { through: { quantity: 3 } });
-
-  // const orderTest = await Order.findByPk(1, { include: Animal });
-  // const testOrderAnimals = await orderTest.getAnimals();
-  // console.log(testOrderAnimals);
+  //Add animals to carts
+  await carts[0].addAnimal(animals[10], { through: { quantity: 3 } });
+  await carts[1].addAnimal(animals[11], { through: { quantity: 5 } });
+  await carts[2].addAnimal(animals[21], { through: { quantity: 1 } });
+  await carts[3].addAnimal(animals[53], { through: { quantity: 2 } });
+  await carts[4].addAnimal(animals[67], { through: { quantity: 4 } });
+  await carts[5].addAnimal(animals[67], { through: { quantity: 2 } });
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
