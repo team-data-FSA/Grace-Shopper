@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editCart } from '../store/cart';
-import { useHistory } from 'react-router-dom';
 
 const CartItem = (props) => {
   const animal = props.currAnimal;
@@ -10,7 +9,6 @@ const CartItem = (props) => {
   const userId = useSelector((state) => state.auth.id);
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   return (
     <div className='cart-item'>
@@ -35,13 +33,13 @@ const CartItem = (props) => {
           name='cartQuant'
           value={quantity}
           onChange={(e) => {
-            dispatch(editCart(userId, animal.id, e.target.value, history));
+            dispatch(editCart(userId, animal.id, e.target.value));
           }}
         />
         <button
           className='change-quant-button increase'
           onClick={() => {
-            dispatch(editCart(userId, animal.id, quantity + 1, history));
+            dispatch(editCart(userId, animal.id, quantity + 1));
           }}
         >
           +
