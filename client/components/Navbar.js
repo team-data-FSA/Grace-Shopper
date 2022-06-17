@@ -7,6 +7,15 @@ import { fetchCart } from '../store/cart';
 const Navbar = () => {
   const userId = useSelector((state) => state.auth.id);
   const cart = useSelector((state) => state.cart);
+
+  let cartCount = 0;
+
+  if (cart.animals) {
+    for (let i = 0; i < cart.animals.length; i++) {
+      cartCount += cart.animals[i].CartAnimal.quantity;
+    }
+  }
+
   const isLoggedIn = !!userId;
 
   const dispatch = useDispatch();
@@ -27,7 +36,7 @@ const Navbar = () => {
             {/* The navbar will show these links after you log in */}
             <Link to='/home'>Home</Link>
             <Link className='cart' to='/checkout'>
-              Cart:{cart.length}
+              Cart:{cartCount}
             </Link>
             <a
               href='#'
@@ -41,10 +50,11 @@ const Navbar = () => {
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
+            <Link to='/animals'>Home</Link>
             <Link to='/login'>Login</Link>
             <Link to='/signup'>Sign Up</Link>
             <Link className='cart' to='/checkout'>
-              Cart:{cart.length}
+              Cart:{cartCount}
             </Link>
           </div>
         )}
