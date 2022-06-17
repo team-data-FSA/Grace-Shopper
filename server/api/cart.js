@@ -29,12 +29,35 @@ router.get('/:userId', async (req, res, next) => {
 
 router.put('/add/:userId/:animalId/:quantity', async (req, res, next) => {
   try {
-    const cart = await CartModel.findOne({
+    let cart = await CartModel.findOne({
       where: { userId: req.params.userId },
+      include: Animal,
+      through: { CartAnimal },
     });
+
+    const currentAnimals = cart.animals;
+    let quantity = parseInt(req.params.quantity);
+
+    for (let i = 0; i < currentAnimals.length; i++) {
+      if (currentAnimals[i].id == req.params.animalId) {
+        quantity += currentAnimals[i].CartAnimal.quantity;
+        console.log(
+          'found quan',
+          quantity,
+          currentAnimals[i].CartAnimal.quantity
+        );
+      }
+    }
+
     const animal = await Animal.findByPk(req.params.animalId);
+
     await cart.addAnimal(animal, {
-      through: { quantity: req.params.quantity },
+      through: { quantity: quantity },
+    });
+    cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+      include: Animal,
+      through: { CartAnimal },
     });
     res.send(cart);
   } catch (error) {
@@ -44,7 +67,7 @@ router.put('/add/:userId/:animalId/:quantity', async (req, res, next) => {
 
 router.put('/edit/:userId/:animalId/:quantity', async (req, res, next) => {
   try {
-    const cart = await CartModel.findOne({
+    let cart = await CartModel.findOne({
       where: { userId: req.params.userId },
     });
     const animal = await Animal.findByPk(req.params.animalId);
@@ -59,7 +82,11 @@ router.put('/edit/:userId/:animalId/:quantity', async (req, res, next) => {
         through: { quantity: req.params.quantity },
       });
     }
-
+    cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+      include: Animal,
+      through: { CartAnimal },
+    });
     res.send(cart);
   } catch (error) {
     next(error);

@@ -28,10 +28,12 @@ const _editCart = (cart) => {
 };
 
 const getLocalCart = () => {
+  localStorage.removeItem('cart');
   let cart = JSON.parse(localStorage.getItem('cart'));
+
   if (cart === null) {
-    cart = {};
-    localStorage.setItem('cart', '{}');
+    cart = { animals: [] };
+    localStorage.setItem('cart', '{{animals:[]}}');
   }
   return cart;
 };
@@ -39,6 +41,7 @@ const getLocalCart = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
+      console.log('fetching cart');
       let cart = {};
       if (userId === undefined) {
         cart = getLocalCart();
@@ -59,13 +62,14 @@ export const addToCart = (userId, animalId, quantity) => {
       let cart = {};
       if (userId === undefined) {
         cart = getLocalCart();
-        // !!!!!
-        // need to add code to add to local storage cart !!!!
-        // !!!!!
+        cart = {
+          animals: [{ id: animalId, CartAnimal: { quantity: quantity } }],
+        };
         localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('cart', cart);
       } else {
         const { data } = await axios.put(
-          `/api/cart/addAnimal/${userId}/${animalId}/${quantity}`
+          `/api/cart/add/${userId}/${animalId}/${quantity}`
         );
         cart = data;
       }
