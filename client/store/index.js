@@ -7,9 +7,8 @@ import animals from './animals';
 import users from './users';
 import animal from './animal';
 import cart from './cart';
-import cartDetails from './cartDetails';
 
-const reducer = combineReducers({ auth, animals, animal, users, cart, cartDetails });
+const reducer = combineReducers({ auth, animals, animal, users, cart });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
