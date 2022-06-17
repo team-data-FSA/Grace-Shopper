@@ -30,8 +30,8 @@ const _editCart = (cart) => {
 const getLocalCart = () => {
   let cart = JSON.parse(localStorage.getItem('cart'));
   if (cart === null) {
-    cart = [];
-    localStorage.setItem('cart', '[]');
+    cart = {};
+    localStorage.setItem('cart', '{}');
   }
   return cart;
 };
@@ -39,12 +39,12 @@ const getLocalCart = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      let cart = [];
+      let cart = {};
       if (userId === undefined) {
         cart = getLocalCart();
       } else {
-        const { data: userData } = await axios.get(`/api/users/${userId}`); // Require token here?
-        cart = userData.cart;
+        const { data } = await axios.get(`/api/cart/${userId}`);
+        cart = data;
       }
       dispatch(setCart(cart));
     } catch (error) {
@@ -56,27 +56,19 @@ export const fetchCart = (userId) => {
 export const addToCart = (userId, animalId, quantity) => {
   return async (dispatch) => {
     try {
-      let cart = [];
+      let cart = {};
       if (userId === undefined) {
         cart = getLocalCart();
-        2;
-
-        for (let i = 0; i < quantity; i++) {
-          cart.push(animalId);
-        }
+        // !!!!!
+        // need to add code to add to local storage cart !!!!
+        // !!!!!
         localStorage.setItem('cart', JSON.stringify(cart));
       } else {
-        const { data: userData } = await axios.get(`/api/users/${userId}`);
-        cart = userData.cart;
-
-        for (let i = 0; i < quantity; i++) {
-          cart.push(animalId);
-        }
-
-        // Update user's cart
-        await axios.put(`/api/users/${userId}`, { cart: cart });
+        const { data } = await axios.put(
+          `/api/cart/addAnimal/${userId}/${animalId}/${quantity}`
+        );
+        cart = data;
       }
-
       dispatch(addCart(cart));
     } catch (error) {
       console.log(error);
@@ -84,20 +76,13 @@ export const addToCart = (userId, animalId, quantity) => {
   };
 };
 
-export const editCart = (userId, animalId, quantity, history) => {
+export const editCart = (userId, animalId, quantity) => {
   return async (dispatch) => {
     try {
-      const { data: userData } = await axios.get(`/api/users/${userId}`);
-      let cart = userData.cart;
-
-      // Remove any current instances of animal in cart
-      cart = cart.filter((animal) => animal !== animalId);
-      // Add updated number of animal into cart (could be 0)
-      for (let i = 0; i < quantity; i++) {
-        cart.push(animalId);
-      }
-      // Update user's cart
-      await axios.put(`/api/users/${userId}`, { cart: cart });
+      const { data } = await axios.put(
+        `/api/cart/edit/${userId}/${animalId}/${quantity}`
+      );
+      const cart = data;
       dispatch(_editCart(cart));
     } catch (error) {
       console.log(error);
