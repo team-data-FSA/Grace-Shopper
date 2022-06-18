@@ -41,7 +41,6 @@ const getLocalCart = () => {
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
-      console.log('fetching cart');
       let cart = {};
       if (userId === undefined) {
         cart = getLocalCart();
