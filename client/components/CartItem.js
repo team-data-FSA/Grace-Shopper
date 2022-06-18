@@ -22,7 +22,7 @@ const CartItem = (props) => {
         <button
           className='change-quant-button decrease'
           onClick={() => {
-            dispatch(editCart(userId, animal.id, quantity - 1, history));
+            dispatch(editCart(userId, animal.id, quantity - 1));
           }}
         >
           -
@@ -51,7 +51,7 @@ const CartItem = (props) => {
       <button
         className='remove-cart'
         onClick={() => {
-          dispatch(editCart(userId, animal.id, 0, history));
+          dispatch(editCart(userId, animal.id, 0));
         }}
       >
         Remove

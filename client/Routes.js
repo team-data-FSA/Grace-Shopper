@@ -32,6 +32,11 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
+            <Route path='/animals' exact component={AllAnimals} />
+            <Route path='/animals/:id' exact component={SingleAnimal} />
+            <Route path='/checkout' component={Checkout} />
+            <Route path='/confirmation' component={Confirmation} />
+            <Redirect to='/animals' />
             <Route path='/' exact component={Login} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
