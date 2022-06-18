@@ -48,11 +48,14 @@ export const fetchAnimals = () => {
 };
 
 // Adding New Animal Thunk
-export const addAnimal = (animal, history) => {
+export const addAnimal = (animal, auth, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/animals', animal);
+      console.log('addanimals', animal, auth);
+      const { data } = await axios.post('/api/animals/add', animal, {
+        headers: auth,
+      });
       dispatch(_addAnimal(data));
       history.push('/animals');
     } catch (error) {
@@ -62,11 +65,13 @@ export const addAnimal = (animal, history) => {
 };
 
 // Updating Edited Animal Thunk
-export const updateAnimal = (animal, history) => {
+export const updateAnimal = (animal, auth, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/animals/${animal.id}`, animal);
+      const { data } = await axios.put(`/api/animals/${animal.id}`, animal, {
+        headers: auth,
+      });
       dispatch(_updateAnimal(data));
       history.push(`/animals/${animal.id}`);
     } catch (error) {
@@ -76,11 +81,13 @@ export const updateAnimal = (animal, history) => {
 };
 
 // Deleting Animal Thunk
-export const deleteAnimal = (id, history) => {
+export const deleteAnimal = (id, auth, history) => {
   // Parameters( animal Id, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/animals/${id}`);
+      const { data } = await axios.delete(`/api/animals/${id}`, {
+        headers: auth,
+      });
       dispatch(_deleteAnimal(data));
       history.push('/animals');
     } catch (error) {

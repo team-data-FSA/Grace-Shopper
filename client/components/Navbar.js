@@ -6,6 +6,7 @@ import { fetchCart } from '../store/cart';
 
 const Navbar = () => {
   const userId = useSelector((state) => state.auth.id);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const cart = useSelector((state) => state.cart);
 
   let cartCount = 0;
@@ -46,6 +47,7 @@ const Navbar = () => {
             >
               Logout
             </a>
+            {isAdmin ? <Link to='/add'> Add Animal</Link> : ''}
           </div>
         ) : (
           <div>

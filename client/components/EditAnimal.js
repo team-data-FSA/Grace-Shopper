@@ -21,6 +21,7 @@ const EditAnimal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   let animalFromStore = useSelector((state) => state.animal);
+  const auth = useSelector((state) => state.auth);
 
   if (!animalFromStore.id) {
     animalFromStore = emptyAnimal;
@@ -33,10 +34,10 @@ const EditAnimal = () => {
     newAnimal[e.target.id] = e.target.value;
     setAnimal(newAnimal);
   };
-  const handleSubmit = () => dispatch(updateAnimal(animal, history));
+  const handleSubmit = () => dispatch(updateAnimal(animal, auth, history));
   const handleReset = () => setAnimal(animalFromStore);
   const handleClear = () => setAnimal(emptyAnimal);
-  const handleDelete = () => dispatch(deleteAnimal(animal.id, history)); // add thunk for delete
+  const handleDelete = () => dispatch(deleteAnimal(animal.id, auth, history)); // add thunk for delete
 
   useEffect(() => {
     setAnimal(animalFromStore);
