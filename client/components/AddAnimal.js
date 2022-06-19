@@ -20,14 +20,13 @@ const emptyAnimal = {
 const AddAnimal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const auth = useSelector((state) => state.auth);
   const [errors, setError] = useState({ name: false, price: false });
 
   const [animal, setAnimal] = useState(emptyAnimal);
 
-  useEffect(() => {
-    console.log('error changed', errors);
-  }, [errors]);
+  // useEffect(() => {
+  //   console.log('error changed', errors);
+  // }, [errors]);
 
   const formValidation = (animal) => {
     let errs = { name: false, price: false };
@@ -52,7 +51,7 @@ const AddAnimal = () => {
   };
   const handleSubmit = () => {
     if (formValidation(animal)) {
-      dispatch(addAnimal(animal, auth, history));
+      dispatch(addAnimal(animal, history));
     }
   };
   const handleClear = () => setAnimal(emptyAnimal);

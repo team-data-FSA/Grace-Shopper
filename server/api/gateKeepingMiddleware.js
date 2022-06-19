@@ -14,9 +14,7 @@ const requireToken = async (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log('isadmin', req.headers.isadmin);
-  const isAdmin = JSON.parse(req.headers.isadmin);
-  if (!isAdmin) {
+  if (!req.user.isAdmin) {
     return res
       .status(403)
       .send('You do not have authorization to execute this action!');

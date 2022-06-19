@@ -40,7 +40,14 @@ const Navbar = () => {
             >
               Logout
             </a>
-            {isAdmin ? <Link to='/add'> Add Animal</Link> : ''}
+            {isAdmin ? (
+              <div>
+                <Link to='/add'> Add Animal</Link>
+                <Link to='/users'> View Users</Link>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         ) : (
           <div>

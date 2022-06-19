@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { TOKEN } from './users';
 // Action constant
 const SET_ANIMALS = 'SET_ANIMALS';
 const ADD_ANIMAL = 'ADD_ANIMAL';
@@ -48,16 +48,20 @@ export const fetchAnimals = () => {
 };
 
 // Adding New Animal Thunk
-export const addAnimal = (animal, auth, history) => {
+export const addAnimal = (animal, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      console.log('addanimals', animal, auth);
-      const { data } = await axios.post('/api/animals/add', animal, {
-        headers: auth,
-      });
-      dispatch(_addAnimal(data));
-      history.push('/animals');
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.post('/api/animals/add', animal, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_addAnimal(data));
+        history.push('/animals');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,15 +69,20 @@ export const addAnimal = (animal, auth, history) => {
 };
 
 // Updating Edited Animal Thunk
-export const updateAnimal = (animal, auth, history) => {
+export const updateAnimal = (animal, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/animals/${animal.id}`, animal, {
-        headers: auth,
-      });
-      dispatch(_updateAnimal(data));
-      history.push(`/animals/${animal.id}`);
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.put(`/api/animals/${animal.id}`, animal, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_updateAnimal(data));
+        history.push(`/animals/${animal.id}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -81,15 +90,20 @@ export const updateAnimal = (animal, auth, history) => {
 };
 
 // Deleting Animal Thunk
-export const deleteAnimal = (id, auth, history) => {
+export const deleteAnimal = (id, history) => {
   // Parameters( animal Id, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/animals/${id}`, {
-        headers: auth,
-      });
-      dispatch(_deleteAnimal(data));
-      history.push('/animals');
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.delete(`/api/animals/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_deleteAnimal(data));
+        history.push('/animals');
+      }
     } catch (error) {
       console.log(error);
     }
