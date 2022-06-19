@@ -19,7 +19,7 @@ router.get('/', requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireToken, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     res.json(user);
@@ -28,11 +28,22 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', requireToken, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     res.send(await user.update(req.body));
   } catch (err) {
     next(err);
+  }
+});
+
+// API Route to delete users on the database
+router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    await user.destroy();
+    res.json(user);
+  } catch (error) {
+    next(error);
   }
 });
