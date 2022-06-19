@@ -25,7 +25,7 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    moveLocalCartToDb(res.data.id, dispatch);
+    await moveLocalCartToDb(res.data.id, dispatch);
     return dispatch(setAuth(res.data));
   }
 };
