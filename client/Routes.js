@@ -36,10 +36,10 @@ class Routes extends Component {
             <Route path='/animals/:id' exact component={SingleAnimal} />
             <Route path='/checkout' component={Checkout} />
             <Route path='/confirmation' component={Confirmation} />
-            <Redirect to='/animals' />
             <Route path='/' exact component={Login} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
+            <Redirect to='/animals' />
           </Switch>
         )}
       </div>
