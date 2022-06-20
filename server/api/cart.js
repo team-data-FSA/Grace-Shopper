@@ -14,13 +14,38 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+const simplifyCart = (cart) => {
+  let cartCount = 0;
+  let total = 0;
+
+  if (cart.animals) {
+    for (let i = 0; i < cart.animals.length; i++) {
+      cartCount += cart.animals[i].CartAnimal.quantity;
+      total += cart.animals[i].CartAnimal.quantity * cart.animals[i].price;
+    }
+  }
+
+  const animals = cart.dataValues.animals.map((animal) => {
+    let newAnimal = {};
+    newAnimal.quantity = animal.CartAnimal.quantity;
+    delete animal.CartAnimal;
+    newAnimal.animal = animal;
+    return newAnimal;
+  });
+  const newCart = { animals, cartCount, total };
+
+  return newCart;
+};
+
 router.get('/:userId', async (req, res, next) => {
   try {
-    const cart = await CartModel.findOne({
+    let cart = await CartModel.findOne({
       where: { userId: req.params.userId },
       include: Animal,
       through: { CartAnimal },
     });
+    cart = simplifyCart(cart);
+
     res.send(cart);
   } catch (err) {
     next(err);
@@ -41,11 +66,6 @@ router.put('/add/:userId/:animalId/:quantity', async (req, res, next) => {
     for (let i = 0; i < currentAnimals.length; i++) {
       if (currentAnimals[i].id == req.params.animalId) {
         quantity += currentAnimals[i].CartAnimal.quantity;
-        console.log(
-          'found quan',
-          quantity,
-          currentAnimals[i].CartAnimal.quantity
-        );
       }
     }
 
@@ -59,6 +79,8 @@ router.put('/add/:userId/:animalId/:quantity', async (req, res, next) => {
       include: Animal,
       through: { CartAnimal },
     });
+    cart = simplifyCart(cart);
+
     res.send(cart);
   } catch (error) {
     next(error);
@@ -87,6 +109,7 @@ router.put('/edit/:userId/:animalId/:quantity', async (req, res, next) => {
       include: Animal,
       through: { CartAnimal },
     });
+    cart = simplifyCart(cart);
     res.send(cart);
   } catch (error) {
     next(error);

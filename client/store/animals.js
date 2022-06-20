@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { TOKEN } from './users';
 // Action constant
 const SET_ANIMALS = 'SET_ANIMALS';
 const ADD_ANIMAL = 'ADD_ANIMAL';
@@ -52,9 +52,16 @@ export const addAnimal = (animal, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/animals', animal);
-      dispatch(_addAnimal(data));
-      history.push('/animals');
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.post('/api/animals/add', animal, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_addAnimal(data));
+        history.push('/animals');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -66,9 +73,16 @@ export const updateAnimal = (animal, history) => {
   // Parameters( animal, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/animals/${animal.id}`, animal);
-      dispatch(_updateAnimal(data));
-      history.push(`/animals/${animal.id}`);
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.put(`/api/animals/${animal.id}`, animal, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_updateAnimal(data));
+        history.push(`/animals/${animal.id}`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -80,9 +94,16 @@ export const deleteAnimal = (id, history) => {
   // Parameters( animal Id, history )
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/animals/${id}`);
-      dispatch(_deleteAnimal(data));
-      history.push('/animals');
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.delete(`/api/animals/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(_deleteAnimal(data));
+        history.push('/animals');
+      }
     } catch (error) {
       console.log(error);
     }

@@ -8,6 +8,7 @@ import SingleAnimal from './components/SingleAnimal';
 import Checkout from './components/Checkout';
 import Confirmation from './components/Confirmation';
 import Users from './components/Users';
+import AddAnimal from './components/AddAnimal';
 import { me } from './store';
 
 /**
@@ -30,13 +31,19 @@ class Routes extends Component {
             <Route path='/users' component={Users} />
             <Route path='/checkout' component={Checkout} />
             <Route path='/confirmation' component={Confirmation} />
+            <Route path='/add' component={AddAnimal} />
             <Redirect to='/animals' />
           </Switch>
         ) : (
           <Switch>
+            <Route path='/animals' exact component={AllAnimals} />
+            <Route path='/animals/:id' exact component={SingleAnimal} />
+            <Route path='/checkout' component={Checkout} />
+            <Route path='/confirmation' component={Confirmation} />
             <Route path='/' exact component={Login} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
+            <Redirect to='/animals' />
           </Switch>
         )}
       </div>

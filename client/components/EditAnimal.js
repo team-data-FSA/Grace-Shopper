@@ -21,19 +21,37 @@ const EditAnimal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   let animalFromStore = useSelector((state) => state.animal);
+  const [errors, setError] = useState({ name: false, price: false });
 
   if (!animalFromStore.id) {
     animalFromStore = emptyAnimal;
   }
 
   const [animal, setAnimal] = useState(animalFromStore);
-
+  const formValidation = (animal) => {
+    let errs = { name: false, price: false };
+    let flag = true;
+    if (animal.price === '') {
+      errs.price = true;
+      flag = false;
+    }
+    if (animal.name === '') {
+      errs.name = true;
+      flag = false;
+    }
+    setError(errs);
+    return flag;
+  };
   const onTextChange = (e) => {
     const newAnimal = { ...animal };
     newAnimal[e.target.id] = e.target.value;
     setAnimal(newAnimal);
   };
-  const handleSubmit = () => dispatch(updateAnimal(animal, history));
+  const handleSubmit = () => {
+    if (formValidation(animal)) {
+      dispatch(updateAnimal(animal, history));
+    }
+  };
   const handleReset = () => setAnimal(animalFromStore);
   const handleClear = () => setAnimal(emptyAnimal);
   const handleDelete = () => dispatch(deleteAnimal(animal.id, history)); // add thunk for delete
@@ -58,6 +76,7 @@ const EditAnimal = () => {
             value={animal.name}
             id={'name'}
             label={'Name'}
+            error={errors.name}
           />
           <TextField
             onChange={onTextChange}
@@ -96,6 +115,7 @@ const EditAnimal = () => {
             value={animal.price}
             id={'price'}
             label={'price'}
+            error={errors.price}
           />
           <TextField
             onChange={onTextChange}

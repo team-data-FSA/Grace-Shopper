@@ -1,17 +1,10 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
+import { useSelector } from 'react-redux';
 
-function Total(props) {
-  let cart = props.cart;
-  let total = 0;
-  let numItems = 0;
-
-  if (cart.animals) {
-    for (let i = 0; i < cart.animals.length; i++) {
-      total += cart.animals[i].CartAnimal.quantity * cart.animals[i].price;
-      numItems += cart.animals[i].CartAnimal.quantity;
-    }
-  }
+function Total() {
+  let total = useSelector((state) => state.cart.total);
+  let numItems = useSelector((state) => state.cart.cartCount);
 
   return (
     <div

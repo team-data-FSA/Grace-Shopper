@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // API Route to add animals to database
-router.post('/', requireToken, isAdmin, async (req, res, next) => {
+router.post('/add', requireToken, isAdmin, async (req, res, next) => {
   try {
     const newAnimal = await Animal.create(req.body);
     res.json(newAnimal);
@@ -44,7 +44,7 @@ router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
 });
 
 // API Route to delete animals on the database
-router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     const animal = await Animal.findByPk(req.params.id);
     await animal.destroy();
