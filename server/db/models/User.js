@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const axios = require('axios');
 
 const SALT_ROUNDS = 5;
 
@@ -12,16 +11,44 @@ const User = db.define('user', {
     unique: true,
     allowNull: false,
   },
+  name: {
+    type: Sequelize.STRING,
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    validate: {
+      isEmail: { msg: 'Please enter a valid email address' },
+    },
+  },
   password: {
+    type: Sequelize.STRING,
+  },
+  phoneNumber: {
+    type: Sequelize.BIGINT,
+    unique: true,
+  },
+  addressLine1: {
+    type: Sequelize.STRING,
+  },
+  addressLine2: {
+    type: Sequelize.STRING,
+  },
+  city: {
+    type: Sequelize.STRING,
+  },
+  state: {
+    type: Sequelize.STRING,
+  },
+  zip: {
+    type: Sequelize.BIGINT,
+  },
+  country: {
     type: Sequelize.STRING,
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
-  },
-  cart: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
-    defaultValue: [],
   },
 });
 
