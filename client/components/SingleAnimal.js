@@ -13,6 +13,7 @@ import {
   CardContent,
   CardActions,
 } from '@material-ui/core';
+import EditAnimal from './EditAnimal';
 
 const SingleAnimal = (props) => {
   // pull state from redux
@@ -96,6 +97,7 @@ const SingleAnimal = (props) => {
           </Button>
         </CardActions>
       </Card>
+      {auth.isAdmin ? <EditAnimal /> : ''}
     </div>
   );
 };

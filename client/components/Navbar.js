@@ -6,15 +6,9 @@ import { fetchCart } from '../store/cart';
 
 const Navbar = () => {
   const userId = useSelector((state) => state.auth.id);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const cart = useSelector((state) => state.cart);
-
-  let cartCount = 0;
-
-  if (cart.animals) {
-    for (let i = 0; i < cart.animals.length; i++) {
-      cartCount += cart.animals[i].CartAnimal.quantity;
-    }
-  }
+  const cartCount = cart.cartCount;
 
   const isLoggedIn = !!userId;
 
@@ -46,6 +40,14 @@ const Navbar = () => {
             >
               Logout
             </a>
+            {isAdmin ? (
+              <div>
+                <Link to='/add'> Add Animal</Link>
+                <Link to='/users'> View Users</Link>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         ) : (
           <div>

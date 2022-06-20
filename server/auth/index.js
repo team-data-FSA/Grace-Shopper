@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { User },
+  models: { User, CartModel },
 } = require('../db');
 const { requireToken, isAdmin } = require('../api/gateKeepingMiddleware');
 module.exports = router;
@@ -19,6 +19,8 @@ router.post('/signup', async (req, res, next) => {
     const { username, password } = req.body;
 
     const user = await User.create({ username, password });
+    const cart = await CartModel.create();
+    user.setCartModel(cart);
 
     res.send({ token: await user.generateToken() });
   } catch (err) {
