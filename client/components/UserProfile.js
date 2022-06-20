@@ -47,7 +47,7 @@ const UserProfile = () => {
         }}
       >
         <h2>Edit Profile</h2>
-        <FormControl style={{ padding: '1rem', width: '15rem' }}>
+        <FormControl style={{ padding: '1rem', width: '25rem' }}>
           <TextField
             onChange={onTextChange}
             value={user.username}
