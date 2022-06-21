@@ -1,10 +1,16 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { newOrder } from '../store/orders'
 
 function Total() {
   let total = useSelector((state) => state.cart.total);
   let numItems = useSelector((state) => state.cart.cartCount);
+  const userId = useSelector((state) => state.auth.id);
+
+  console.log(state)
+
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -46,7 +52,7 @@ function Total() {
       <a
         href='/confirmation'
         className='button'
-        onClick={() => console.log('empty')}
+        onClick={(e) => {dispatch(newOrder())}}
         style={{
           display: 'inline-block',
           textAlign: 'center',
