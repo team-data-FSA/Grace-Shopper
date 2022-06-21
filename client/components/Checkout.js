@@ -9,6 +9,7 @@ const Checkout = () => {
 
   const userId = useSelector((state) => state.auth.id);
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
   useEffect(() => {
     dispatch(fetchCart(userId));
