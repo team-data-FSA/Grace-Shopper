@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Order, Animal, OrderAnimal },
+  models: { User, Order, Animal, OrderAnimal },
 } = require('../db');
 const { requireToken } = require('./gateKeepingMiddleware');
 module.exports = router;
@@ -37,13 +37,29 @@ router.get('/:userId/:orderId', requireToken, async (req, res, next) => {
   }
 });
 
-router.post('/:userId/add', requireToken, async (req, res, next) => {
+router.post('/add/:userId', async (req, res, next) => {
   try {
     const details = req.body;
-    const newOrder = await Order.create(
-      { userId: req.params.userId}, details
-    );
+    const newOrder = await Order.create(details);
+    if (req.params.userId) {
+      const user = await User.findByPk(req.params.userId);
+      await user.addOrder(newOrder);
+    }
     res.json(newOrder);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/animals/:cartId/:animalId/:quantity', async (req, res, next) => {
+  try {
+    const quantity = req.params.quantity;
+    const order = await Order.findByPk(req.params.cartId);
+    const animal = await Animal.findByPk(req.params.animalId);
+    await order.addAnimal(animal, {
+      through: { quantity: req.params.quantity },
+    });
+    res.json(order);
   } catch (error) {
     next(error);
   }

@@ -50,7 +50,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className='cart-total' style={{}}>
-        <Total />
+        <Total cart={cart} />
       </div>
     </div>
   );

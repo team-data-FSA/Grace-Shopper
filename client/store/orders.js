@@ -64,18 +64,29 @@ export const fetchOrders = (userId) => {
   };
 };
 
-export const newOrder = (userId) => {
+export const newOrder = (cart, userId) => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem(TOKEN);
-      if (token) {
-        const { data: order } = await axios.post(`/api/orders/${userId}/add`, {
-          headers: {
-            authorization: token,
-          },
+      let order = {};
+      if (userId) {
+        const { data } = await axios.post(`/api/orders/add/${userId}`, {
+          datePlaced: new Date(),
         });
-        dispatch(addOrder(order));
+        order = data;
+      } else {
+        const { data } = await axios.post(`/api/orders/add/`, {
+          datePlaced: new Date(),
+        });
+        order = data;
       }
+
+      for (let i = 0; i < cart.animals.length; i++) {
+        await axios.post(
+          `/api/orders/animals/${order.id}/${cart.animals[i].animal.id}/${cart.animals[i].quantity}`
+        );
+      }
+
+      dispatch(addOrder(order));
     } catch (err) {
       console.log(err);
     }

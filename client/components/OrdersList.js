@@ -9,7 +9,6 @@ const OrdersList = () => {
   const { orders, auth } = useSelector((state) => {
     return state;
   });
-  console.log(orders);
 
   // dispatch actions
   const dispatch = useDispatch();

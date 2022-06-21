@@ -10,6 +10,7 @@ import Confirmation from './components/Confirmation';
 import Users from './components/Users';
 import UserProfile from './components/UserProfile';
 import OrdersList from './components/OrdersList';
+import OrderCheckout from './components/OrderCheckout';
 import AddAnimal from './components/AddAnimal';
 import { me } from './store';
 
@@ -36,6 +37,7 @@ class Routes extends Component {
             <Route path='/profile' component={UserProfile} />
             <Route path='/add' component={AddAnimal} />
             <Route path='/orders' component={OrdersList} />
+            <Route path='/order-checkout' component={OrderCheckout} />
             <Redirect to='/animals' />
           </Switch>
         ) : (
@@ -47,6 +49,7 @@ class Routes extends Component {
             <Route path='/' exact component={Login} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
+            <Route path='/order-checkout' component={OrderCheckout} />
             <Redirect to='/animals' />
           </Switch>
         )}

@@ -8,6 +8,13 @@ const Order = db.define('order', {
   datePlaced: {
     type: Sequelize.DATE,
   },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    validate: {
+      isEmail: { msg: 'Please enter a valid email address' },
+    },
+  },
   dateShipped: {
     type: Sequelize.DATE,
   },
