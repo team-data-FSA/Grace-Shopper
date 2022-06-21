@@ -20,6 +20,22 @@ form div {
   display: inline-block;
 }
 
+.header{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  text-justify: center;
+}
+
+.nav-links{
+  display: flex;
+  justify-content: space-around;
+}
+
+#site-title{
+  text-align: center;
+}
 .container {
   align-items: flex-start;
   align-content: space-between;

@@ -5,13 +5,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, updateUser } from '../store/user';
 import { useHistory } from 'react-router-dom';
 
+const emptyUser = {
+  username: '',
+  name: '',
+  email: '',
+  phoneNumber: '',
+  adressLine1: '',
+  addressLine2: '',
+  city: '',
+  zip: '',
+};
+
 const UserProfile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   let userStore = useSelector((state) => state.user);
   let userAuth = useSelector((state) => state.auth);
-
+  if (!userStore.id) {
+    userStore = emptyUser;
+  }
   const [user, setUser] = useState(userStore);
   const [country, setCountry] = useState('');
 
