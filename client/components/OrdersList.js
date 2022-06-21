@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { fetchOrders } from '../store/animals';
+import { fetchOrders } from '../store/orders';
 import Order from './Order';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -9,13 +9,14 @@ const OrdersList = () => {
   const { orders, auth } = useSelector((state) => {
     return state;
   });
+  console.log(orders);
 
   // dispatch actions
   const dispatch = useDispatch();
 
   // component did mount
   useEffect(() => {
-    dispatch(fetchOrders());
+    dispatch(fetchOrders(auth.id));
   }, []);
 
   return (
@@ -25,7 +26,7 @@ const OrdersList = () => {
       </Typography>
       <ul className='container'>
         {orders.length > 0 ? (
-          orders.map((order) => <Order order={order} />)
+          orders.map((order) => <Order order={order} key={order.id} />)
         ) : (
           <div>No previous orders</div>
         )}

@@ -16,16 +16,6 @@ const Order = (props) => {
   return (
     <div className='container'>
       <Card>
-        <CardMedia
-          component='img'
-          alt={`order icon`}
-          image={
-            'https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/order-512.png'
-          }
-          height='20'
-          width='20'
-          className='media'
-        />
         <CardContent>
           <Typography variant='h6' component='div'>
             Order #{order.id}
@@ -40,21 +30,20 @@ const Order = (props) => {
             Shipping Address: <br />
             {order.addressLine1} <br />
             {order.addressLine2} <br />
-            {order.city}, {order.state} {order.zip} {order.country}
+            {order.city} {order.state} {order.zip} {order.country}
           </Typography>
           <Typography variant='body1' component='div'>
             Order details:
           </Typography>
           {orderAnimals.map((animal) => {
             return (
-              <Typography>
-                {animal.animal.name} -- {animal.quantity} x{' '}
-                {animal.animal.price}
+              <Typography key={animal.id}>
+                {animal.name} -- {animal.OrderAnimal.quantity} x ${animal.price}
               </Typography>
             );
           })}
           <Typography variant='h6' component='div'>
-            Total Price: ${order.total}
+            Total Price: ${order.totalPrice}
           </Typography>
         </CardContent>
       </Card>
