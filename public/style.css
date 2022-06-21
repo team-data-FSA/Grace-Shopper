@@ -20,20 +20,21 @@ form div {
   display: inline-block;
 }
 
-.header{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  text-align: center;
-  text-justify: center;
+.header {
+  margin-top: 80px;
 }
 
-.nav-links{
-  display: flex;
-  justify-content: space-around;
+.navlink {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-#site-title{
+.cart-count {
+  border-radius: 1px;
+}
+
+#site-title {
   text-align: center;
 }
 .container {
@@ -68,31 +69,31 @@ form div {
   object-fit: fill;
 }
 
-.cart-item{
+.cart-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.cart-list{
+.cart-list {
   display: flex;
   flex-direction: column;
 }
 
-#cart-img{
+#cart-img {
   width: 100px;
   height: 100px;
   margin: 10px;
 }
 
-.change-quant-button{
+.change-quant-button {
   border-radius: 25%;
   color: white;
   width: 2em;
   height: 2em;
 }
 
-.cartQuant{
+.cartQuant {
   width: 30px;
   text-align: center;
 }
@@ -101,13 +102,13 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
-.decrease{
+.decrease {
   background-color: red;
 }
 
-.increase{
+.increase {
   background-color: green;
 }
