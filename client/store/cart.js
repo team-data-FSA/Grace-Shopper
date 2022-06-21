@@ -30,7 +30,6 @@ const _editCart = (cart) => {
 };
 
 export const getLocalCart = () => {
-  // localStorage.removeItem('cart');
   let cart = JSON.parse(localStorage.getItem('cart'));
 
   if (cart === null) {
