@@ -24,6 +24,9 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
+  cart: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+  },
   phoneNumber: {
     type: Sequelize.BIGINT,
     unique: true,
