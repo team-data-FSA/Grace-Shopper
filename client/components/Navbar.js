@@ -36,14 +36,8 @@ const Navbar = () => {
                 Cart:{cartCount}
               </Link>
               <Link to='/profile'> Edit Profile</Link>
-              <a
-                href='#'
-                onClick={() => {
-                  dispatch(logout());
-                }}
-              >
-                Logout
-              </a>
+              <Link to='/orders'>View Order History</Link>
+
               {isAdmin ? (
                 <div>
                   <Link to='/add'> Add Animal</Link>
@@ -53,6 +47,14 @@ const Navbar = () => {
               ) : (
                 ''
               )}
+              <a
+                href='#'
+                onClick={() => {
+                  dispatch(logout());
+                }}
+              >
+                Logout
+              </a>
             </div>
           ) : (
             <div className='nav-links'>
