@@ -24,8 +24,9 @@ const AllAnimals = () => {
   const { animals: allAnimals, auth } = useSelector((state) => {
     return state;
   });
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState({ animalType: [], name: '' });
   const [animals, setAnimals] = useState([]);
+  const [limit, setLimit] = useState(10);
 
   const { search } = useLocation();
 
@@ -50,11 +51,13 @@ const AllAnimals = () => {
   useEffect(() => {
     let filterdAnimals = allAnimals;
     if (filter.name) {
+      console.log('name');
       filterdAnimals = filterdAnimals.filter((animal) =>
         animal.name.toUpperCase().includes(filter.name.toUpperCase())
       );
     }
-    if (filter.animalType) {
+    if (filter.animalType.length > 0) {
+      console.log('type', filter);
       filterdAnimals = filterdAnimals.filter((animal) =>
         filter.animalType.includes(animal.animalType)
       );
@@ -65,6 +68,7 @@ const AllAnimals = () => {
   useEffect(() => {
     console.log('fil', animals);
   }, [animals]);
+  let count = 0;
 
   return (
     <div>
@@ -74,12 +78,25 @@ const AllAnimals = () => {
       </Typography>
       <ul className='container'>
         {animals.length > 0 ? (
-          animals.map((animal) => (
-            <AnimalListItem animal={animal} key={animal.id} />
-          ))
+          animals.map((animal) => {
+            if (count++ < limit) {
+              return <AnimalListItem animal={animal} key={animal.id} />;
+            }
+          })
         ) : (
           <div>Loading Exotic Pets!</div> //this catches while the animals load may not be optimal solution
         )}
+        <div
+          style={{ width: '100vw', display: 'flex', justifyContent: 'center' }}
+        >
+          <Button
+            onClick={() => {
+              setLimit(limit + 10);
+            }}
+          >
+            View More
+          </Button>
+        </div>
       </ul>
     </div>
   );
