@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Action constant
-const SET_ANIMAL = "SET_ANIMAL";
+const SET_ANIMAL = 'SET_ANIMAL';
+const UPDATE_ANIMAL = 'UPDATE_ANIMAL';
 
 // Action creator
 const setAnimal = (animal) => {
@@ -28,6 +29,8 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_ANIMAL:
+      return action.animal;
+    case UPDATE_ANIMAL:
       return action.animal;
     default:
       return state;

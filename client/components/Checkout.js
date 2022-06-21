@@ -37,9 +37,9 @@ const Checkout = () => {
               cart.animals.map((item) => {
                 return (
                   <CartItem
-                    currAnimal={item}
-                    quantity={item.CartAnimal.quantity}
-                    key={item.id}
+                    currAnimal={item.animal}
+                    quantity={item.quantity}
+                    key={item.animal.id}
                   />
                 );
               })
@@ -50,7 +50,7 @@ const Checkout = () => {
         </div>
       </div>
       <div className='cart-total' style={{}}>
-        <Total cart={cart} />
+        <Total />
       </div>
     </div>
   );

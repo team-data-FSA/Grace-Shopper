@@ -6,10 +6,8 @@ import { fetchUsers } from '../store/users';
 
 const Users = () => {
   const { users, auth } = useSelector((state) => {
-    console.log({state});
     return state;
   });
-  console.log(users);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -15,7 +15,22 @@ const Order = db.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-  shippingAddress: {
+  addressLine1: {
+    type: Sequelize.STRING,
+  },
+  addressLine2: {
+    type: Sequelize.STRING,
+  },
+  city: {
+    type: Sequelize.STRING,
+  },
+  state: {
+    type: Sequelize.STRING,
+  },
+  zip: {
+    type: Sequelize.BIGINT,
+  },
+  country: {
     type: Sequelize.STRING,
   },
 });

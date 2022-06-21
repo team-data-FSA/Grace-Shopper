@@ -20,6 +20,23 @@ form div {
   display: inline-block;
 }
 
+.header {
+  margin-top: 80px;
+}
+
+.navlink {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.cart-count {
+  border-radius: 1px;
+}
+
+#site-title {
+  text-align: center;
+}
 .container {
   align-items: flex-start;
   align-content: space-between;
@@ -39,6 +56,11 @@ form div {
   transition: 0.3s;
 }
 
+.order-card {
+  margin: 15px;
+  width: 75%;
+}
+
 .card:hover {
   box-shadow: 0 20px 20px 0 rgba(15, 11, 33, 0.6);
 }
@@ -47,31 +69,31 @@ form div {
   object-fit: fill;
 }
 
-.cart-item{
+.cart-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.cart-list{
+.cart-list {
   display: flex;
   flex-direction: column;
 }
 
-#cart-img{
+#cart-img {
   width: 100px;
   height: 100px;
   margin: 10px;
 }
 
-.change-quant-button{
+.change-quant-button {
   border-radius: 25%;
   color: white;
   width: 2em;
   height: 2em;
 }
 
-.cartQuant{
+.cartQuant {
   width: 30px;
   text-align: center;
 }
@@ -80,13 +102,13 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
-.decrease{
+.decrease {
   background-color: red;
 }
 
-.increase{
+.increase {
   background-color: green;
 }

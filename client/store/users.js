@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Action constant
-const TOKEN = 'token'
+export const TOKEN = 'token';
 const GET_USERS = 'GET_USERS';
 const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
@@ -31,15 +31,17 @@ const _deleteUser = (user) => {
 // Thunk
 export const fetchUsers = () => {
   return async (dispatch) => {
-    try{
+    try {
       const token = window.localStorage.getItem(TOKEN);
-      if(token) {
-        const { data: allUsers } = await axios.get('/api/users', { headers: {
-          authorization: token
-        }})
+      if (token) {
+        const { data: allUsers } = await axios.get('/api/users', {
+          headers: {
+            authorization: token,
+          },
+        });
         dispatch(getUsers(allUsers));
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
