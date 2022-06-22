@@ -90,6 +90,7 @@ const Navbar = () => {
                     anchor='right'
                     open={open}
                     onClose={() => setOpen(false)}
+                    onOpen={() => {}}
                   >
                     <div>
                       <Box textAlign='center' p={2}>
