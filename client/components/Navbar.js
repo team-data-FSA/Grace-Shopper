@@ -92,7 +92,7 @@ const Navbar = () => {
                     onClose={() => setOpen(false)}
                     onOpen={() => {}}
                   >
-                    <div>
+                    <div className='sidebar'>
                       <Box textAlign='center' p={2}>
                         Welcome {}
                         {user.username}

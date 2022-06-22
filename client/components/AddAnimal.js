@@ -24,10 +24,6 @@ const AddAnimal = () => {
 
   const [animal, setAnimal] = useState(emptyAnimal);
 
-  // useEffect(() => {
-  //   console.log('error changed', errors);
-  // }, [errors]);
-
   const formValidation = (animal) => {
     let errs = { name: false, price: false };
     let flag = true;
