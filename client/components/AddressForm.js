@@ -25,7 +25,7 @@ const emptyOrder = {
   zip: '',
 };
 
-export default function AddressForm({ setSubmit }) {
+export default function AddressForm() {
   const userAuth = useSelector((state) => state.auth);
   const userId = userAuth.id;
 
