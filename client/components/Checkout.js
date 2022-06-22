@@ -49,7 +49,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className='cart-total' style={{}}>
+      <div className='cart-total' style={{alignSelf: 'center'}}>
         <Total cart={cart} />
       </div>
     </div>

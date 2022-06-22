@@ -71,7 +71,7 @@ const Filters = ({ setFilter, filter }) => {
   }, [search]);
 
   return (
-    <div>
+    <div className='filter'>
       {animlTypes.map((type, index) => {
         return (
           <div key={index} style={{ display: 'flex', flexDirection: 'row' }}>
@@ -94,7 +94,12 @@ const Filters = ({ setFilter, filter }) => {
         id={'search'}
         label={'Search'}
       />
-      <Button onClick={() => setSearch('')}>Clear</Button>
+      <Button
+        style={{ color: '#32213A', backgroundColor: '#66717E' }}
+        onClick={() => setSearch('')}
+      >
+        Clear
+      </Button>
     </div>
   );
 };

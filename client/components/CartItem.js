@@ -18,7 +18,7 @@ const CartItem = (props) => {
       <div style={{ width: '15em' }}>
         <h5>{animal.name}</h5>
       </div>
-      <div>
+      <div style={{ marginRight: '20px' }}>
         <button
           className='change-quant-button decrease'
           onClick={() => {
@@ -45,7 +45,7 @@ const CartItem = (props) => {
           +
         </button>
       </div>
-      <div>
+      <div style={{ marginRight: '20px' }}>
         <h3>${animal.price}</h3>
       </div>
       <button
