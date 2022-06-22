@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from '../store/user';
+
+import { fetchCart, editCartDetails } from '../store/cart';
 
 import {
   FormControlLabel,
@@ -10,8 +11,8 @@ import {
   Checkbox,
   Button,
 } from '@material-ui/core';
-const emptyUser = {
-  username: '',
+
+const emptyOrder = {
   firstName: '',
   lastName: '',
   email: '',
@@ -20,35 +21,56 @@ const emptyUser = {
   addressLine2: '',
   city: '',
   zip: '',
+  state: '',
+  country: '',
 };
 
 export default function AddressForm() {
-  let userStore = useSelector((state) => state.user);
-  let userAuth = useSelector((state) => state.auth);
-  console.log(userAuth);
-  if (!userStore.id) {
-    userStore = emptyUser;
+  const userAuth = useSelector((state) => state.auth);
+  const userId = userAuth.id;
+  const cart = useSelector((state) => state.cart);
+  let orderDetails = cart;
+
+  if (!userId) {
+    orderDetails = emptyOrder;
   }
-  const [user, setUser] = useState(userStore);
+
+  const [order, setOrder] = useState(orderDetails);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userAuth.id) {
-      dispatch(fetchUser(userAuth.id));
-    }
+    dispatch(fetchCart(userId));
   }, []);
 
   useEffect(() => {
-    setUser(userStore);
-  }, [userStore]);
+    setOrder(cart);
+  }, [cart]);
 
-  const handleSubmit = () => {
-    dispatch(addAddressToOrder(user));
+  const handleChange = (evt) => {
+    let newOrder = {};
+    newOrder[evt.target.id] = evt.target.value;
+    dispatch(editCartDetails(userId, newOrder));
   };
 
   return (
     <React.Fragment>
+      <Typography variant='h6' gutterBottom>
+        Email
+      </Typography>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          required
+          id='email'
+          name='email'
+          label='Email Address'
+          fullWidth
+          variant='standard'
+          value={order.email}
+          onChange={(e) => handleChange(e)}
+        />
+      </Grid>
+      <Grid />
       <Typography variant='h6' gutterBottom>
         Shipping address
       </Typography>
@@ -62,7 +84,8 @@ export default function AddressForm() {
             fullWidth
             autoComplete='given-name'
             variant='standard'
-            value={user.firstName}
+            value={order.firstName}
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -74,30 +97,33 @@ export default function AddressForm() {
             fullWidth
             autoComplete='family-name'
             variant='standard'
-            value={user.lastName}
+            value={order.lastName}
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
-            id='address1'
-            name='address1'
+            id='addressLine1'
+            name='addressLine1'
             label='Address line 1'
-            value={user.addressLine1}
+            value={order.addressLine1}
             fullWidth
             autoComplete='shipping address-line1'
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
-            id='address2'
-            name='address2'
+            id='addressLine2'
+            name='addressLine2'
             label='Address line 2'
-            value={user.addressLine2}
+            value={order.addressLine2}
             fullWidth
             autoComplete='shipping address-line2'
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -106,10 +132,11 @@ export default function AddressForm() {
             id='city'
             name='city'
             label='City'
-            value={user.city}
+            value={order.city}
             fullWidth
             autoComplete='shipping address-level2'
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -117,9 +144,10 @@ export default function AddressForm() {
             id='state'
             name='state'
             label='State/Province/Region'
-            value={user.state}
+            value={order.state}
             fullWidth
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -128,10 +156,11 @@ export default function AddressForm() {
             id='zip'
             name='zip'
             label='Zip / Postal code'
-            value={user.zip}
+            value={order.zip}
             fullWidth
             autoComplete='shipping postal-code'
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -140,10 +169,11 @@ export default function AddressForm() {
             id='country'
             name='country'
             label='Country'
-            value={user.country}
+            value={order.country}
             fullWidth
             autoComplete='shipping country'
             variant='standard'
+            onChange={(e) => handleChange(e)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -155,7 +185,6 @@ export default function AddressForm() {
           />
         </Grid>
       </Grid>
-      <Button onClick={handleSubmit}>Submit</Button>
     </React.Fragment>
   );
 }

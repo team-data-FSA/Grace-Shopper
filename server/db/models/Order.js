@@ -2,6 +2,12 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Order = db.define('order', {
+  firstName: {
+    type: Sequelize.STRING,
+  },
+  lastName: {
+    type: Sequelize.STRING,
+  },
   totalPrice: {
     type: Sequelize.DECIMAL,
   },

@@ -1,7 +1,6 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
 import { useSelector, useDispatch } from 'react-redux';
-import { newOrder } from '../store/orders';
 
 function Total(props) {
   let total = useSelector((state) => state.cart.total);
@@ -10,14 +9,6 @@ function Total(props) {
   const cart = props.cart;
 
   const dispatch = useDispatch();
-
-  const handleConfirmation = () => {
-    if (userId) {
-      dispatch(newOrder(cart, userId));
-    } else {
-      dispatch(newOrder(cart));
-    }
-  };
 
   return (
     <div
@@ -59,7 +50,6 @@ function Total(props) {
       <a
         href='/order-checkout'
         className='button'
-        onClick={handleConfirmation}
         style={{
           display: 'inline-block',
           textAlign: 'center',

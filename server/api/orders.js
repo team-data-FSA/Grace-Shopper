@@ -64,3 +64,12 @@ router.post('/animals/:cartId/:animalId/:quantity', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId);
+    res.send(await order.update(req.body));
+  } catch (err) {
+    next(err);
+  }
+});

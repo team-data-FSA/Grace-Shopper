@@ -115,3 +115,14 @@ router.put('/edit/:userId/:animalId/:quantity', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/editDetails/:userId', async (req, res, next) => {
+  try {
+    let cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+    });
+    res.send(await cart.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});

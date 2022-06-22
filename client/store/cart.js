@@ -151,6 +151,32 @@ export const editCart = (userId, animalId, quantity) => {
   };
 };
 
+export const editCartDetails = (userId, updatedCart) => {
+  return async (dispatch) => {
+    try {
+      let cart = {};
+      if (userId === undefined) {
+        cart = getLocalCart();
+        for (let keys in updatedCart) {
+          cart[keys] = updatedCart[keys];
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        dispatch(_editCart(cart));
+      } else {
+        const fetchedCart = await axios.get(`/api/cart/${userId}`);
+        cart = fetchedCart.data;
+        for (let keys in updatedCart) {
+          cart[keys] = updatedCart[keys];
+        }
+        await axios.put(`/api/cart/editDetails/${userId}`, cart);
+      }
+      dispatch(_editCart(cart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 const initialState = [];
 
 export default (state = initialState, action) => {

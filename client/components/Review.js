@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchCart } from '../store/cart';
 import {
   Typography,
   Grid,
@@ -40,23 +43,38 @@ const payments = [
 ];
 
 export default function Review() {
+  const userAuth = useSelector((state) => state.auth);
+  const userId = userAuth.id;
+  const cart = useSelector((state) => state.cart);
+  const cartAnimals = cart.animals;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCart(userId));
+  }, []);
+
+  console.log(cart);
+
   return (
     <React.Fragment>
       <Typography variant='h6' gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant='body2'>{product.price}</Typography>
+        {cartAnimals.map((item) => (
+          <ListItem key={item.animal.name} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={item.animal.name} />
+            <Typography variant='body2'>
+              {item.quantity} x ${item.animal.price}
+            </Typography>
           </ListItem>
         ))}
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary='Total' />
           <Typography variant='subtitle1' sx={{ fontWeight: 700 }}>
-            $34.06
+            ${cart.total}
           </Typography>
         </ListItem>
       </List>
