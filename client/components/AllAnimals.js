@@ -24,9 +24,15 @@ const AllAnimals = () => {
   const { animals: allAnimals, auth } = useSelector((state) => {
     return state;
   });
-  const [filter, setFilter] = useState({ animalType: [], name: '' });
+  const [filter, setFilter] = useState({ animalType: {}, name: '' });
   const [animals, setAnimals] = useState([]);
   const [limit, setLimit] = useState(10);
+  //const [allFilters, setAllFilters] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('all filters', allFilters);
+  //   setFilter({ animalType: allFilters });
+  // }, [allFilters]);
 
   const { search } = useLocation();
 
@@ -46,9 +52,11 @@ const AllAnimals = () => {
 
   useEffect(() => {
     console.log('filter changed', filter);
+    doFilter();
+    setLimit(10);
   }, [filter]);
 
-  useEffect(() => {
+  const doFilter = () => {
     let filterdAnimals = allAnimals;
     if (filter.name) {
       console.log('name');
@@ -63,16 +71,21 @@ const AllAnimals = () => {
       );
     }
     setAnimals(filterdAnimals);
+  };
+
+  useEffect(() => {
+    doFilter();
   }, [allAnimals]);
 
   useEffect(() => {
-    console.log('fil', animals);
+    console.log('animals changed', animals);
   }, [animals]);
   let count = 0;
 
   return (
     <div>
-      <MultipleSelectChip />
+      {/* <MultipleSelectChip /> */}
+      <Filters query={query} setFilter={setFilter} filter={filter} />
       <Typography variant='h3' component='div'>
         Welcome to our exotic shelter.
       </Typography>
@@ -86,17 +99,25 @@ const AllAnimals = () => {
         ) : (
           <div>Loading Exotic Pets!</div> //this catches while the animals load may not be optimal solution
         )}
-        <div
-          style={{ width: '100vw', display: 'flex', justifyContent: 'center' }}
-        >
-          <Button
-            onClick={() => {
-              setLimit(limit + 10);
+        {limit >= animals.length ? (
+          ''
+        ) : (
+          <div
+            style={{
+              width: '100vw',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
-            View More
-          </Button>
-        </div>
+            <Button
+              onClick={() => {
+                setLimit(limit + 10);
+              }}
+            >
+              View More
+            </Button>
+          </div>
+        )}
       </ul>
     </div>
   );
