@@ -97,7 +97,7 @@ const AllAnimals = () => {
             }
           })
         ) : (
-          <div>Loading Exotic Pets!</div> //this catches while the animals load may not be optimal solution
+          <div>Uh Oh, No Exotic Pets!</div> //this catches while the animals load may not be optimal solution
         )}
         {limit >= animals.length ? (
           ''
