@@ -65,7 +65,6 @@ const Filters = ({ setFilter, filter }) => {
   };
 
   useEffect(() => {
-    console.log('search', search);
     const newFilter = { ...filter };
     newFilter.name = search;
     setFilter(newFilter);
@@ -73,9 +72,9 @@ const Filters = ({ setFilter, filter }) => {
 
   return (
     <div>
-      {animlTypes.map((type) => {
+      {animlTypes.map((type, index) => {
         return (
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div key={index} style={{ display: 'flex', flexDirection: 'row' }}>
             <input
               type='checkbox'
               id={type.name}
@@ -83,7 +82,7 @@ const Filters = ({ setFilter, filter }) => {
               onClick={addFilter}
               checked={checkCheck(type.name)}
             ></input>
-            <label for={type.name}>
+            <label htmlFor={type.name}>
               {type.name} ({type.quantity})
             </label>
           </div>
