@@ -46,7 +46,7 @@ class Routes extends Component {
             <Route path='/animals/:id' exact component={SingleAnimal} />
             <Route path='/checkout' component={Checkout} />
             <Route path='/confirmation' component={Confirmation} />
-            <Route path='/' exact component={Login} />
+            {/* <Route path='/' exact component={Login} /> */}
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
             <Route path='/order-checkout' component={OrderCheckout} />

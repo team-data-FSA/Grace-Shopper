@@ -17,7 +17,7 @@ import {
 
 import AnimalListItem from './AnimalListItem';
 import Filters from './Filters';
-import MultipleSelectChip from './FilterTest';
+// import MultipleSelectChip from './FilterTest';
 
 const AllAnimals = () => {
   // pull state from Redux we also have access to auth

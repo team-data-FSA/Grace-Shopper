@@ -1,5 +1,6 @@
 import React from 'react';
 import { newOrder } from '../store/orders';
+import { clearCart } from '../store/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CssBaseline,
@@ -51,6 +52,7 @@ export default function OrderCheckout() {
   const handleNext = () => {
     if (activeStep === 2) {
       dispatch(newOrder(cart, userId));
+      dispatch(clearCart(userId));
     }
     setActiveStep(activeStep + 1);
   };

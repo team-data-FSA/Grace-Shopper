@@ -157,3 +157,24 @@ router.put('/editDetails/:userId', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/reset/:userId', async (req, res, next) => {
+  try {
+    const cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+      include: Animal,
+      through: { CartAnimal },
+    });
+
+    const currentAnimals = cart.animals;
+
+    for (let i = 0; i < currentAnimals.length; i++) {
+      let currAnimal = await Animal.findByPk(currentAnimals[i].id);
+      await cart.removeAnimal(currAnimal);
+    }
+    const simplifiedCart = simplifyCart(cart);
+    res.send(simplifiedCart);
+  } catch (error) {
+    next(error);
+  }
+});
