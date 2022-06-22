@@ -88,18 +88,20 @@ const Filters = ({ setFilter, filter }) => {
           </div>
         );
       })}
-      <TextField
-        onChange={onTextChange}
-        value={search}
-        id={'search'}
-        label={'Search'}
-      />
-      <Button
-        style={{ color: '#32213A', backgroundColor: '#66717E' }}
-        onClick={() => setSearch('')}
-      >
-        Clear
-      </Button>
+      <div style={{ outline: 'auto', display: 'flex' }}>
+        <TextField
+          onChange={onTextChange}
+          value={search}
+          id={'search'}
+          label={'Search'}
+        />
+        <Button
+          style={{ color: '#32213A', backgroundColor: '#66717E' }}
+          onClick={() => setSearch('')}
+        >
+          Clear
+        </Button>
+      </div>
     </div>
   );
 };
