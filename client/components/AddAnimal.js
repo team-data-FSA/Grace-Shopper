@@ -83,6 +83,12 @@ const AddAnimal = () => {
           />
           <TextField
             onChange={onTextChange}
+            value={animal.animalType}
+            id={'animalType'}
+            label={'Type'}
+          />
+          <TextField
+            onChange={onTextChange}
             value={animal.diet}
             id={'diet'}
             label={'Diet'}
