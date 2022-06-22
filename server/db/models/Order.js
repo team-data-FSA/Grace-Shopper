@@ -8,7 +8,7 @@ const Order = db.define('order', {
   lastName: {
     type: Sequelize.STRING,
   },
-  totalPrice: {
+  total: {
     type: Sequelize.DECIMAL,
   },
   datePlaced: {
