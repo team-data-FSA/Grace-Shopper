@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchAnimals } from '../store/animals';
 import { addToCart } from '../store/cart';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,11 +15,28 @@ import {
   CardMedia,
 } from '@material-ui/core';
 
+import AnimalListItem from './AnimalListItem';
+import Filters from './Filters';
+import MultipleSelectChip from './FilterTest';
+
 const AllAnimals = () => {
   // pull state from Redux we also have access to auth
-  const { animals, auth } = useSelector((state) => {
+  const { animals: allAnimals, auth } = useSelector((state) => {
     return state;
   });
+  const [filter, setFilter] = useState({ animalType: {}, name: '' });
+  const [animals, setAnimals] = useState([]);
+  const [limit, setLimit] = useState(10);
+  //const [allFilters, setAllFilters] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('all filters', allFilters);
+  //   setFilter({ animalType: allFilters });
+  // }, [allFilters]);
+
+  const { search } = useLocation();
+
+  let query = React.useMemo(() => new URLSearchParams(search), [search]);
 
   // dispatch actions
   const dispatch = useDispatch();
@@ -27,74 +44,79 @@ const AllAnimals = () => {
   // component did mount
   useEffect(() => {
     dispatch(fetchAnimals());
+    setFilter({
+      animalType: query.getAll('animalType'),
+      name: query.get('name'),
+    });
   }, []);
 
-  // Creating a qty state for number of animals to be adopted
-  const [qty, setQty] = useState(1);
+  useEffect(() => {
+    console.log('filter changed', filter);
+    doFilter();
+    setLimit(10);
+  }, [filter]);
 
-  const handleChange = (event) => {
-    setQty(event.target.value);
+  const doFilter = () => {
+    let filterdAnimals = allAnimals;
+    if (filter.name) {
+      console.log('name');
+      filterdAnimals = filterdAnimals.filter((animal) =>
+        animal.name.toUpperCase().includes(filter.name.toUpperCase())
+      );
+    }
+    if (filter.animalType.length > 0) {
+      console.log('type', filter);
+      filterdAnimals = filterdAnimals.filter((animal) =>
+        filter.animalType.includes(animal.animalType)
+      );
+    }
+    setAnimals(filterdAnimals);
   };
+
+  useEffect(() => {
+    doFilter();
+  }, [allAnimals]);
+
+  useEffect(() => {
+    console.log('animals changed', animals);
+  }, [animals]);
+  let count = 0;
 
   return (
     <div>
+      {/* <MultipleSelectChip /> */}
+      <Filters query={query} setFilter={setFilter} filter={filter} />
       <Typography variant='h3' component='div'>
         Welcome to our exotic shelter.
       </Typography>
       <ul className='container'>
         {animals.length > 0 ? (
-          animals.map((animal) => (
-            <div className='card' key={animal.id}>
-              <Card>
-                <Link
-                  to={`animals/${animal.id}`}
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
-                  <CardMedia
-                    component='img'
-                    alt={`${animal.name} picture`}
-                    image={animal.picture}
-                    height='400'
-                    className='media'
-                  />
-                  <CardContent>
-                    <Typography variant='h5' component='div'>
-                      {animal.name}
-                    </Typography>
-                    <Typography variant='body1' component='div'>
-                      {'$'}
-                      {animal.price}
-                    </Typography>
-                  </CardContent>
-                </Link>
-                <CardActions>
-                  <TextField
-                    variant='outlined'
-                    style={{ maxWidth: 80 }}
-                    label='Qty'
-                    type='number'
-                    placeholder='0-100'
-                    name='Qty'
-                    value={qty}
-                    onChange={handleChange}
-                  />
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    size='small'
-                    onClick={() => {
-                      // console.log("userId: ", auth.id);
-                      dispatch(addToCart(auth.id, animal.id, qty));
-                    }}
-                  >
-                    Adopt Me!
-                  </Button>
-                </CardActions>
-              </Card>
-            </div>
-          ))
+          animals.map((animal) => {
+            if (count++ < limit) {
+              return <AnimalListItem animal={animal} key={animal.id} />;
+            }
+          })
         ) : (
-          <div>Loading Exotic Pets!</div> //this catches while the animals load may not be optimal solution
+          <div>Uh Oh, No Exotic Pets!</div> //this catches while the animals load may not be optimal solution
+        )}
+        {limit >= animals.length ? (
+          ''
+        ) : (
+          <div
+            style={{
+              width: '100vw',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Button
+              onClick={() => {
+                setLimit(limit + 10);
+              }}
+            >
+              View More
+            </Button>
+          </div>
         )}
       </ul>
     </div>
