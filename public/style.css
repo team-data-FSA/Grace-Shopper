@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  background-color: bisque;
 }
 
 a {
@@ -36,7 +37,9 @@ form div {
 
 #site-title {
   text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
 .container {
   align-items: flex-start;
   align-content: space-between;
@@ -48,12 +51,31 @@ form div {
   padding: 20px;
 }
 
+.filter {
+  display: flex;
+  justify-content: space-between;
+  color: #66717e;
+}
+
+.filter:hover {
+  color: black;
+}
+
+.btn {
+  color: #66717e;
+  background-color: black;
+}
+
 .card {
   margin: 15px;
   width: 35%;
   height: 60%;
   box-shadow: 0 4px 10px 0 rgba(196, 196, 196, 0.2);
   transition: 0.3s;
+}
+
+.sidebar {
+  background-color: bisque;
 }
 
 .order-card {
@@ -71,7 +93,7 @@ form div {
 
 .cart-item {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
 }
 
