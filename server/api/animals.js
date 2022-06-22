@@ -44,7 +44,7 @@ router.put('/:id', requireToken, isAdmin, async (req, res, next) => {
 });
 
 // API Route to delete animals on the database
-router.delete('/:id', isAdmin, async (req, res, next) => {
+router.delete('/:id', requireToken, isAdmin, async (req, res, next) => {
   try {
     const animal = await Animal.findByPk(req.params.id);
     await animal.destroy();
