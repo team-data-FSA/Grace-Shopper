@@ -6,6 +6,8 @@ import SingleAnimal from '../components/SingleAnimal';
 const SET_CART = 'SET_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
 const EDIT_CART = 'EDIT_CART';
+const EDIT_CART_DETAILS = 'EDIT_CART_DETAILS';
+const CLEAR_CART = 'CLEAR_CART';
 
 // Action creators
 const setCart = (cart) => {
@@ -25,6 +27,20 @@ const addCart = (cart) => {
 const _editCart = (cart) => {
   return {
     type: EDIT_CART,
+    cart,
+  };
+};
+
+const emptyCart = (cart) => {
+  return {
+    type: CLEAR_CART,
+    cart,
+  };
+};
+
+const _editCartDetails = (cart) => {
+  return {
+    type: EDIT_CART_DETAILS,
     cart,
   };
 };
@@ -151,7 +167,49 @@ export const editCart = (userId, animalId, quantity) => {
   };
 };
 
-const initialState = [];
+export const editCartDetails = (userId, updatedCart) => {
+  return async (dispatch) => {
+    try {
+      let cart = {};
+      if (userId === undefined) {
+        cart = getLocalCart();
+        for (let keys in updatedCart) {
+          cart[keys] = updatedCart[keys];
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        dispatch(_editCartDetails(cart));
+      } else {
+        const fetchedCart = await axios.get(`/api/cart/${userId}`);
+        cart = fetchedCart.data;
+        for (let keys in updatedCart) {
+          cart[keys] = updatedCart[keys];
+        }
+        await axios.put(`/api/cart/editDetails/${userId}`, cart);
+        dispatch(_editCartDetails(cart));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const clearCart = (userId) => {
+  return async (dispatch) => {
+    try {
+      let cart = {};
+      if (userId === undefined) {
+        cart = { animals: [], cartCount: 0, total: 0 };
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+        const userCart = await axios.put(`/api/cart/reset/${userId}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -160,6 +218,8 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return action.cart;
     case EDIT_CART:
+      return action.cart;
+    case EDIT_CART_DETAILS:
       return action.cart;
     default:
       return state;

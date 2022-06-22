@@ -1,10 +1,14 @@
 import React from 'react';
 import CurrencyFormat from 'react-currency-format';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-function Total() {
+function Total(props) {
   let total = useSelector((state) => state.cart.total);
   let numItems = useSelector((state) => state.cart.cartCount);
+  const userId = useSelector((state) => state.auth.id);
+  const cart = props.cart;
+
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -28,10 +32,10 @@ function Total() {
               Total ({numItems} items): {'      '}
               <strong>{value}</strong>
             </p>
-            <small className='total-gift'>
+            {/* <small className='total-gift'>
               <input type='checkbox' />
               This order contains a gift
-            </small>
+            </small> */}
           </>
         )}
         //show amount in decimal places
@@ -44,9 +48,8 @@ function Total() {
         prefix={'$'}
       />
       <a
-        href='/confirmation'
+        href='/order-checkout'
         className='button'
-        onClick={() => console.log('empty')}
         style={{
           display: 'inline-block',
           textAlign: 'center',
@@ -57,7 +60,7 @@ function Total() {
           outline: 'none',
         }}
       >
-        Checkout
+        Proceed to Checkout
       </a>
     </div>
   );

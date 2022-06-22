@@ -32,7 +32,38 @@ const simplifyCart = (cart) => {
     newAnimal.animal = animal;
     return newAnimal;
   });
-  const newCart = { animals, cartCount, total };
+
+  const firstName = cart.firstName;
+  const lastName = cart.lastName;
+  const email = cart.email;
+  const addressLine1 = cart.addressLine1;
+  const addressLine2 = cart.addressLine2;
+  const city = cart.city;
+  const state = cart.state;
+  const zip = cart.zip;
+  const country = cart.country;
+  const cardName = cart.cardName;
+  const cardNumber = cart.cardNumber;
+  const expDate = cart.expDate;
+  const cvv = cart.cvv;
+  const newCart = {
+    animals,
+    cartCount,
+    total,
+    firstName,
+    lastName,
+    email,
+    addressLine1,
+    addressLine2,
+    city,
+    state,
+    zip,
+    country,
+    cardName,
+    cardNumber,
+    expDate,
+    cvv,
+  };
 
   return newCart;
 };
@@ -111,6 +142,38 @@ router.put('/edit/:userId/:animalId/:quantity', async (req, res, next) => {
     });
     cart = simplifyCart(cart);
     res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/editDetails/:userId', async (req, res, next) => {
+  try {
+    let cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+    });
+    res.send(await cart.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/reset/:userId', async (req, res, next) => {
+  try {
+    const cart = await CartModel.findOne({
+      where: { userId: req.params.userId },
+      include: Animal,
+      through: { CartAnimal },
+    });
+
+    const currentAnimals = cart.animals;
+
+    for (let i = 0; i < currentAnimals.length; i++) {
+      let currAnimal = await Animal.findByPk(currentAnimals[i].id);
+      await cart.removeAnimal(currAnimal);
+    }
+    const simplifiedCart = simplifyCart(cart);
+    res.send(simplifiedCart);
   } catch (error) {
     next(error);
   }

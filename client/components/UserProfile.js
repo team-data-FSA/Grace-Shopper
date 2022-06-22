@@ -7,10 +7,11 @@ import { useHistory } from 'react-router-dom';
 
 const emptyUser = {
   username: '',
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phoneNumber: '',
-  adressLine1: '',
+  addressLine1: '',
   addressLine2: '',
   city: '',
   zip: '',
@@ -69,9 +70,15 @@ const UserProfile = () => {
           />
           <TextField
             onChange={onTextChange}
-            value={user.name}
-            id={'name'}
-            label={'Name'}
+            value={user.firstName}
+            id={'firstName'}
+            label={'First Name'}
+          />
+          <TextField
+            onChange={onTextChange}
+            value={user.lastName}
+            id={'lastName'}
+            label={'Last Name'}
           />
           <TextField
             onChange={onTextChange}
