@@ -65,7 +65,6 @@ const Filters = ({ setFilter, filter }) => {
   };
 
   useEffect(() => {
-    console.log('search', search);
     const newFilter = { ...filter };
     newFilter.name = search;
     setFilter(newFilter);

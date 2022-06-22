@@ -51,7 +51,6 @@ const AllAnimals = () => {
   }, []);
 
   useEffect(() => {
-    console.log('filter changed', filter);
     doFilter();
     setLimit(10);
   }, [filter]);
@@ -59,13 +58,11 @@ const AllAnimals = () => {
   const doFilter = () => {
     let filterdAnimals = allAnimals;
     if (filter.name) {
-      console.log('name');
       filterdAnimals = filterdAnimals.filter((animal) =>
         animal.name.toUpperCase().includes(filter.name.toUpperCase())
       );
     }
     if (filter.animalType.length > 0) {
-      console.log('type', filter);
       filterdAnimals = filterdAnimals.filter((animal) =>
         filter.animalType.includes(animal.animalType)
       );
@@ -77,9 +74,9 @@ const AllAnimals = () => {
     doFilter();
   }, [allAnimals]);
 
-  useEffect(() => {
-    console.log('animals changed', animals);
-  }, [animals]);
+  // useEffect(() => {
+  //   console.log('animals changed', animals);
+  // }, [animals]);
   let count = 0;
 
   return (
