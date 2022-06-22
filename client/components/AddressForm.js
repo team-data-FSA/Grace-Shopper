@@ -31,11 +31,7 @@ export default function AddressForm() {
 
   let cart = useSelector((state) => state.cart);
 
-  if (!cart.animals) {
-    cart = emptyOrder;
-  }
-
-  const [order, setOrder] = useState(cart);
+  const [order, setOrder] = useState(emptyOrder);
 
   const dispatch = useDispatch();
 
@@ -44,7 +40,15 @@ export default function AddressForm() {
   }, []);
 
   useEffect(() => {
-    setOrder(cart);
+    let newCart = { ...cart };
+    Object.keys(cart).forEach((key) => {
+      if (newCart[key] === null) {
+        newCart[key] = '';
+      }
+    });
+    if (cart.firstName !== undefined) {
+      setOrder(newCart);
+    }
   }, [cart]);
 
   const handleChange = (evt) => {

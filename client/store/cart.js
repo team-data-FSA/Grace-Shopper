@@ -202,6 +202,7 @@ export const clearCart = (userId) => {
         localStorage.setItem('cart', JSON.stringify(cart));
       } else {
         const userCart = await axios.put(`/api/cart/reset/${userId}`);
+        dispatch(_editCart(userCart));
       }
     } catch (error) {
       console.log(error);

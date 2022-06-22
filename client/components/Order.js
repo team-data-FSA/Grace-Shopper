@@ -43,7 +43,7 @@ const Order = (props) => {
             );
           })}
           <Typography variant='h6' component='div'>
-            Total Price: ${order.totalPrice}
+            Total Price: ${order.total}
           </Typography>
         </CardContent>
       </Card>
