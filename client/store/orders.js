@@ -68,14 +68,20 @@ export const newOrder = (cart, userId) => {
   return async (dispatch) => {
     try {
       let order = {};
+      let newOrder = {};
+      for (let keys in cart) {
+        newOrder[keys] = cart[keys];
+      }
       if (userId) {
         const { data } = await axios.post(`/api/orders/add/${userId}`, {
           datePlaced: new Date(),
+          newOrder,
         });
         order = data;
       } else {
         const { data } = await axios.post(`/api/orders/add/`, {
           datePlaced: new Date(),
+          newOrder,
         });
         order = data;
       }

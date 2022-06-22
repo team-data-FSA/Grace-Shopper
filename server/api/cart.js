@@ -32,7 +32,38 @@ const simplifyCart = (cart) => {
     newAnimal.animal = animal;
     return newAnimal;
   });
-  const newCart = { animals, cartCount, total };
+
+  const firstName = cart.firstName;
+  const lastName = cart.lastName;
+  const email = cart.email;
+  const addressLine1 = cart.addressLine1;
+  const addressLine2 = cart.addressLine2;
+  const city = cart.city;
+  const state = cart.state;
+  const zip = cart.zip;
+  const country = cart.country;
+  const cardName = cart.cardName;
+  const cardNumber = cart.cardNumber;
+  const expDate = cart.expDate;
+  const cvv = cart.cvv;
+  const newCart = {
+    animals,
+    cartCount,
+    total,
+    firstName,
+    lastName,
+    email,
+    addressLine1,
+    addressLine2,
+    city,
+    state,
+    zip,
+    country,
+    cardName,
+    cardNumber,
+    expDate,
+    cvv,
+  };
 
   return newCart;
 };

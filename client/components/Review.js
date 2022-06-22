@@ -10,31 +10,6 @@ import {
   ListItemText,
 } from '@material-ui/core';
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: 'Mr John Smith' },
@@ -54,7 +29,14 @@ export default function Review() {
     dispatch(fetchCart(userId));
   }, []);
 
-  console.log(cart);
+  const payments = [
+    { name: 'Card holder', detail: cart.cardName },
+    {
+      name: 'Card number',
+      detail: 'xxxx-xxxx-xxxx-' + cart.cardNumber.slice(-4),
+    },
+    { name: 'Expiration date', detail: cart.expDate },
+  ];
 
   return (
     <React.Fragment>
@@ -62,15 +44,18 @@ export default function Review() {
         Order summary
       </Typography>
       <List disablePadding>
-        {cartAnimals.map((item) => (
-          <ListItem key={item.animal.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={item.animal.name} />
-            <Typography variant='body2'>
-              {item.quantity} x ${item.animal.price}
-            </Typography>
-          </ListItem>
-        ))}
-
+        {cartAnimals ? (
+          cartAnimals.map((item) => (
+            <ListItem key={item.animal.name} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={item.animal.name} />
+              <Typography variant='body2'>
+                {item.quantity} x ${item.animal.price}
+              </Typography>
+            </ListItem>
+          ))
+        ) : (
+          <p />
+        )}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary='Total' />
           <Typography variant='subtitle1' sx={{ fontWeight: 700 }}>
@@ -83,8 +68,18 @@ export default function Review() {
           <Typography variant='h6' gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>
+            {cart.firstName} {cart.lastName}
+          </Typography>
+          <Typography gutterBottom>{cart.addressLine1}</Typography>
+          {cart.addressLine2 ? (
+            <Typography gutterBottom>{cart.addressLine2}</Typography>
+          ) : (
+            <p />
+          )}
+          <Typography gutterBottom>
+            {cart.city}, {cart.state} {cart.zip} {cart.country}
+          </Typography>
         </Grid>
         <Grid item container direction='column' xs={12} sm={6}>
           <Typography variant='h6' gutterBottom sx={{ mt: 2 }}>

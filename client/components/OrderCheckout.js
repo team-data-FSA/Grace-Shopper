@@ -1,4 +1,6 @@
 import React from 'react';
+import { newOrder } from '../store/orders';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   CssBaseline,
   AppBar,
@@ -39,9 +41,17 @@ function getStepContent(step) {
 const theme = createTheme();
 
 export default function OrderCheckout() {
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(0);
+  let cart = useSelector((state) => state.cart);
+
+  const userAuth = useSelector((state) => state.auth);
+  const userId = userAuth.id;
 
   const handleNext = () => {
+    if (activeStep === 2) {
+      dispatch(newOrder(cart, userId));
+    }
     setActiveStep(activeStep + 1);
   };
 

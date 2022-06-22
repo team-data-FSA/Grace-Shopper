@@ -20,22 +20,22 @@ const emptyOrder = {
   addressLine1: '',
   addressLine2: '',
   city: '',
-  zip: '',
   state: '',
   country: '',
+  zip: '',
 };
 
 export default function AddressForm() {
   const userAuth = useSelector((state) => state.auth);
   const userId = userAuth.id;
-  const cart = useSelector((state) => state.cart);
-  let orderDetails = cart;
 
-  if (!userId) {
-    orderDetails = emptyOrder;
+  let cart = useSelector((state) => state.cart);
+
+  if (!cart.animals) {
+    cart = emptyOrder;
   }
 
-  const [order, setOrder] = useState(orderDetails);
+  const [order, setOrder] = useState(cart);
 
   const dispatch = useDispatch();
 
@@ -48,9 +48,8 @@ export default function AddressForm() {
   }, [cart]);
 
   const handleChange = (evt) => {
-    let newOrder = {};
-    newOrder[evt.target.id] = evt.target.value;
-    dispatch(editCartDetails(userId, newOrder));
+    setOrder({ ...order, [evt.target.id]: evt.target.value });
+    dispatch(editCartDetails(userId, { [evt.target.id]: evt.target.value }));
   };
 
   return (

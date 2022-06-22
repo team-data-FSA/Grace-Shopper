@@ -46,6 +46,18 @@ const Order = db.define('order', {
   country: {
     type: Sequelize.STRING,
   },
+  cardName: {
+    type: Sequelize.STRING,
+  },
+  cardNumber: {
+    type: Sequelize.STRING,
+  },
+  expDate: {
+    type: Sequelize.STRING,
+  },
+  cvv: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = Order;
